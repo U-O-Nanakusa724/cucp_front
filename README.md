@@ -1,1 +1,3 @@
 # CUCP_front
+
+CUCPのフロントプロジェクト。
