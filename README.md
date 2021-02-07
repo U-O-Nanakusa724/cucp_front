@@ -1,8 +1,24 @@
-# CUCP_front
+# cucp_front
 
-CUCPのフロントプロジェクト。
+## Project setup
+```
+npm install
+```
 
-利用するもの
-- node.js
-- Vue.js
-- UI-Element
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Lints and fixes files
+```
+npm run lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
