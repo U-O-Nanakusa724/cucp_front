@@ -1,24 +1,10 @@
 # cucp_front
 
-## Project setup
-```
-npm install
-```
+## 導入するフレームワークやライブラリ、ツールなど
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
+- Vue.js   : フロントプロジェクト作成やライブラリ管理を円滑に行うフレームワーク
+- axios    : APIを叩きやすくするライブラリ
+- figma    : フロントデザインツール
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
