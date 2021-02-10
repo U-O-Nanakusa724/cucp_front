@@ -1,22 +1,10 @@
 <template>
-  <div id="app">
-    <div id="nav">
-    <Header/>
+  <div id="footer">
+    <div id="footer-nav">
+      uoray.biz Engineer Team.
     </div>
-    <router-view/>
   </div>
 </template>
-
-<script>
-import Header from './components/common/Header'
-
-export default {
-  name: 'app',
-  components : {
-    Header
-  }
-}
-</script>
 
 <style lang="scss">
 #app {
@@ -27,7 +15,7 @@ export default {
   color: #2c3e50;
 }
 
-#nav {
+#footer-nav {
   padding: 30px;
 
   a {

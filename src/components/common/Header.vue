@@ -1,22 +1,11 @@
 <template>
-  <div id="app">
-    <div id="nav">
-    <Header/>
+  <div id="header">
+    <div id="header-nav">
+      <router-link to="/">Home</router-link> |
+      <router-link to="../cars">Cars</router-link>
     </div>
-    <router-view/>
   </div>
 </template>
-
-<script>
-import Header from './components/common/Header'
-
-export default {
-  name: 'app',
-  components : {
-    Header
-  }
-}
-</script>
 
 <style lang="scss">
 #app {
@@ -27,7 +16,7 @@ export default {
   color: #2c3e50;
 }
 
-#nav {
+#header-nav {
   padding: 30px;
 
   a {
