@@ -9,10 +9,6 @@
                         :data="cars"
                         style="width: 100%">
                     <el-table-column
-                            prop="id"
-                            label="ID"
-                            width="300"/>
-                    <el-table-column
                             prop="code"
                             label="車種コード"
                             width="300"/>
@@ -22,14 +18,30 @@
                             width="300"/>
                     <el-table-column
                             prop="operation"
-                            label="Ops"
+                            label="編集"
                             width="200"
-                            align="left">
+                            align="center">
+                            <template>
+                                <el-button
+                                size="mini"
+                                type="primary"
+                                icon="el-icon-edit"
+                                round
+                                @click="editCar(scope.row.id)"/>
+                            </template>
+                    </el-table-column>
+                    <el-table-column
+                            prop="operation"
+                            label="削除"
+                            width="200"
+                            align="center">
                             <template slot-scope="scope">
                                 <el-button
                                 size="mini"
                                 type="danger"
-                                @click="deleteCar(scope.row.id)">×</el-button>
+                                icon="el-icon-delete"
+                                round
+                                @click="deleteCar(scope.row.id)"/>
                             </template>
                     </el-table-column>
                 </el-table>
@@ -57,19 +69,24 @@
         this.cars = res.data.cars
         console.info(this.cars)
       },
-      deleteCar: async function (id) {
-        console.log('begin')
+      editCar: function (id) {
         console.log(id)
+      },
+      deleteCar: async function (id) {
         if(confirm('削除してもよろしいですか?')) {
           await axios.delete('http://localhost:8080/v1/cars/' + id + '/delete')
           await this.refresh()
-          console.log('success')
+          this.$message({
+            showClose: true,
+            message: 'レコードを削除しました',
+            type: 'success'
+          })
         }
       }
     }
   }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+    @import "../../public/css/base";
 </style>
