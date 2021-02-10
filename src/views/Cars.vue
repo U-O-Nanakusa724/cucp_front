@@ -20,6 +20,18 @@
                             prop="name"
                             label="車種名"
                             width="300"/>
+                    <el-table-column
+                            prop="operation"
+                            label="Ops"
+                            width="200"
+                            align="left">
+                            <template slot-scope="scope">
+                                <el-button
+                                size="mini"
+                                type="danger"
+                                @click="deleteCar(scope.row.id)">×</el-button>
+                            </template>
+                    </el-table-column>
                 </el-table>
             </el-card>
         </el-col>
@@ -44,6 +56,15 @@
         const res = await axios.get('http://localhost:8080/v1/cars')
         this.cars = res.data.cars
         console.info(this.cars)
+      },
+      deleteCar: async function (id) {
+        console.log('begin')
+        console.log(id)
+        if(confirm('削除してもよろしいですか?')) {
+          await axios.delete('http://localhost:8080/v1/cars/' + id + '/delete')
+          await this.refresh()
+          console.log('success')
+        }
       }
     }
   }
