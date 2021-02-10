@@ -12,16 +12,18 @@
 
 ```dir
 cucp_front
-+ public             :
++ public
+|  + css             :cssを格納する
 |  + favicon.ico     :
 |  + index.html      :
 + src
 |  + assets          :pngなどのファイルが置いてある
-|  + components      :SpringBootやSwaggerなどのコンフィグクラスを格納する
+|  + components      :パーツ化したコンテンツ(vueファイル)を格納する
+|  |  + common       :全体共通部分を格納する
 |  + router
-|  |  + index.js     :SPA(シングルページアプリケーション)の対象とするvueを設定する
+|  |  + index.js     :SPA(シングルページアプリケーション)対象とするvueを設定する
 |  + store
-|  |   + index.js    :
+|  |  + index.js    :
 |  + views           :SPAの対象となるコンテンツページたちをここに格納する
 |  + App.vue         :共通ヘッダなど、全ページで読み込まれるコンテンツをこのファイルに記入する
 |  + main.js         :このVueプロジェクト全体でインポートするライブラリを記述するなど、Thymeleafのlayout.htmlみたいな役割を担う
