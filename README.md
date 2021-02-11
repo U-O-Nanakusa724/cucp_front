@@ -25,7 +25,7 @@ cucp_front
 |  + store
 |  |  + index.js    :
 |  + views           :SPAの対象となるコンテンツページたちをここに格納する
-|  + App.vue         :共通ヘッダなど、全ページで読み込まれるコンテンツをこのファイルに記入する
+|  + App.vue         :共通ヘッダなど、全ページのテンプレートの役割をする。router-viewの箇所にrouter/index.jsで指定したものがSPAされる。
 |  + main.js         :このVueプロジェクト全体でインポートするライブラリを記述するなど、Thymeleafのlayout.htmlみたいな役割を担う
 + build.config.js    :
 + package.json       :SpringBootで言うところのgradle。プロジェクトの設定ファイル
