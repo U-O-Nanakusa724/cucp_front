@@ -21,14 +21,7 @@
                             label="編集"
                             width="200"
                             align="center">
-                            <template>
-                                <el-button
-                                size="mini"
-                                type="primary"
-                                icon="el-icon-edit"
-                                round
-                                @click="editCar(scope.row.id)"/>
-                            </template>
+                            <CarForm :data="cars"/>
                     </el-table-column>
                     <el-table-column
                             prop="operation"
@@ -41,7 +34,7 @@
                                 type="danger"
                                 icon="el-icon-delete"
                                 round
-                                @click="deleteCar(scope.row.id)"/>
+                                @click="deleteCar(scope.row)"/>
                             </template>
                     </el-table-column>
                 </el-table>
@@ -52,11 +45,16 @@
 
 <script>
   import axios from 'axios'
+  import CarForm from '../components/forms/CarForm.vue'
 
   export default {
+    components: {
+       CarForm
+    },
     name: "Cars",
     data () {
       return {
+
         cars: []
       }
     },
@@ -69,12 +67,9 @@
         this.cars = res.data.cars
         console.info(this.cars)
       },
-      editCar: function (id) {
-        console.log(id)
-      },
-      deleteCar: async function (id) {
+      deleteCar: async function (row) {
         if(confirm('削除してもよろしいですか?')) {
-          await axios.delete('http://localhost:8080/v1/cars/' + id + '/delete')
+          await axios.delete('http://localhost:8080/v1/cars/' + row.id + '/delete')
           await this.refresh()
           this.$message({
             showClose: true,
