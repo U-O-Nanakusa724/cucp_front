@@ -7,12 +7,12 @@
               round @click="editCar()"></el-button>
 
    <el-dialog title="車種入力" :visible.sync="dialogFormVisible">
-     <el-form :model="form">
+     <el-form :model="carform">
        <el-form-item label="車種コード" :label-width="formLabelWidth">
-         <el-input v-model="form.code" autocomplete="off" placeholder="必須項目"></el-input>
+         <el-input v-model="carform.code" autocomplete="off" placeholder="必須項目"></el-input>
        </el-form-item>
        <el-form-item label="車種名" :label-width="formLabelWidth">
-         <el-input v-model="form.name" autocomplete="off"></el-input>
+         <el-input v-model="carform.name" autocomplete="off"></el-input>
        </el-form-item>
      </el-form>
      <span slot="footer" class="dialog-footer">
@@ -25,12 +25,25 @@
 
 <script>
   export default {
+    props: {
+      id: {
+        type: Number
+      },
+      code: {
+        type: String,
+        default: ''
+      },
+      name: {
+        type: String,
+        default: ''
+      }
+    },
     data() {
       return {
         dialogFormVisible: false,
-        form: {
-          code: '',
-          name: ''
+        carform: {
+          code: this.code,
+          name: this.name
         },
         formLabelWidth: '120px'
       }
@@ -38,6 +51,7 @@
     methods: {
       editCar: async function () {
         this.dialogFormVisible = true;
+        console.log(this.id)
       }
     }
   }

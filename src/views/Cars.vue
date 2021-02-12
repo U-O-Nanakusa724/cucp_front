@@ -21,7 +21,11 @@
                             label="編集"
                             width="200"
                             align="center">
-                            <CarForm :data="cars"/>
+                            <template slot-scope="scope">
+                            <CarForm :id="scope.row.id"
+                                     :code="scope.row.code"
+                                     :name="scope.row.name"/>
+                            </template>
                     </el-table-column>
                     <el-table-column
                             prop="operation"
@@ -51,10 +55,8 @@
     components: {
        CarForm
     },
-    name: "Cars",
     data () {
       return {
-
         cars: []
       }
     },
