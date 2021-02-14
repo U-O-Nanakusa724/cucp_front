@@ -28,7 +28,7 @@
     },
     methods: {
       signIn: async function () {
-        await axios.post('http://localhost:8080/signin', )
+        await axios.post('http://localhost:8080/signin', username, password)
           .then(() => this.$router.push('/'))
           .catch(error => {
             this.$message({
