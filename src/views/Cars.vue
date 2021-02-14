@@ -24,7 +24,8 @@
                             <template slot-scope="scope">
                             <CarForm :id="scope.row.id"
                                      :code="scope.row.code"
-                                     :name="scope.row.name"/>
+                                     :name="scope.row.name"
+                                     @refresh="refresh"/>
                             </template>
                     </el-table-column>
                     <el-table-column
@@ -67,7 +68,6 @@
       refresh: async function () {
         const res = await axios.get('http://localhost:8080/v1/cars')
         this.cars = res.data.cars
-        console.info(this.cars)
       },
       deleteCar: async function (row) {
         if(confirm('削除してもよろしいですか?')) {
