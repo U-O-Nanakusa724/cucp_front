@@ -6,7 +6,7 @@
               icon="el-icon-edit"
               round @click="editCar()"></el-button>
 
-   <el-dialog title="車種入力" :visible.sync="dialogFormVisible">
+   <el-dialog title="車種入力" :visible.sync="carFormVisible">
      <el-form :model="carform">
        <el-form-item label="車種コード" :label-width="formLabelWidth">
          <el-input v-model="carform.code" autocomplete="off" placeholder="必須項目"></el-input>
@@ -16,14 +16,16 @@
        </el-form-item>
      </el-form>
      <span slot="footer" class="dialog-footer">
-       <el-button @click="dialogFormVisible = false">キャンセル</el-button>
-       <el-button type="primary" @click="dialogFormVisible = false">決定</el-button>
+       <el-button @click="carFormVisible = false">キャンセル</el-button>
+       <el-button type="primary" @click="putCar(carform)">決定</el-button>
      </span>
    </el-dialog>
    </div>
 </template>
 
 <script>
+  import axios from 'axios'
+
   export default {
     props: {
       id: {
@@ -40,8 +42,9 @@
     },
     data() {
       return {
-        dialogFormVisible: false,
+        carFormVisible: false,
         carform: {
+          id: this.id,
           code: this.code,
           name: this.name
         },
@@ -50,11 +53,18 @@
     },
     methods: {
       editCar: async function () {
-        this.dialogFormVisible = true;
-        console.log(this.id)
+        this.carFormVisible = true;
+      },
+      putCar: async function(carform) {
+        await axios.put('http://localhost:8080/v1/cars/' + carform.id + '/update', carform)
+        this.carFormVisible = false
+        this.$emit("refresh")
+        this.$message({
+          showClose: true,
+          message: 'レコードを編集しました',
+          type: 'success'
+        })
       }
     }
   }
-
-
 </script>
