@@ -1,6 +1,7 @@
 <template>
   <div id="header">
     <div id="header-nav">
+      <router-link to="/signin">SignIn</router-link> |
       <router-link to="/">Home</router-link> |
       <router-link to="../cars">Cars</router-link> |
       <router-link to="../stores">Stores</router-link> |
