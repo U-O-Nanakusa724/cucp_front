@@ -1,35 +1,42 @@
 <template>
    <div class="car">
+      <el-dialog title="車種登録" :visible.sync="createFormVisible" :before-close="alert">
+        <el-form :model="carForm">
+          <el-form-item label="車種コード" :label-width="formLabelWidth">
+            <el-input v-model="carForm.code" autocomplete="off" placeholder="必須項目"></el-input>
+          </el-form-item>
+          <el-form-item label="車種名" :label-width="formLabelWidth">
+            <el-input v-model="carForm.name" autocomplete="off"></el-input>
+          </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="cancel()">キャンセル</el-button>
+          <el-button type="primary" @click="postCar(carForm)">決定</el-button>
+        </span>
+      </el-dialog>
 
-   <el-dialog title="車種登録" :visible.sync="createFormVisible">
-     <el-form :model="carForm">
-       <el-form-item label="車種コード" :label-width="formLabelWidth">
-         <el-input v-model="carForm.code" autocomplete="off" placeholder="必須項目"></el-input>
-       </el-form-item>
-       <el-form-item label="車種名" :label-width="formLabelWidth">
-         <el-input v-model="carForm.name" autocomplete="off"></el-input>
-       </el-form-item>
-     </el-form>
-     <span slot="footer" class="dialog-footer">
-       <el-button @click="cancel()">キャンセル</el-button>
-       <el-button type="primary" @click="postCar(carForm)">決定</el-button>
-     </span>
-   </el-dialog>
+      <el-dialog title="車種編集" :visible.sync="editFormVisible" :before-close="alert">
+        <el-form :model="carForm">
+          <el-form-item label="車種コード" :label-width="formLabelWidth">
+            <el-input v-model="carForm.code" autocomplete="off" placeholder="必須項目"></el-input>
+          </el-form-item>
+          <el-form-item label="車種名" :label-width="formLabelWidth">
+            <el-input v-model="carForm.name" autocomplete="off"></el-input>
+          </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="alertVisible=true">キャンセル</el-button>
+          <el-button type="primary" @click="putCar(carForm)">決定</el-button>
+        </span>
+      </el-dialog>
 
-   <el-dialog title="車種編集" :visible.sync="editFormVisible">
-     <el-form :model="carForm">
-       <el-form-item label="車種コード" :label-width="formLabelWidth">
-         <el-input v-model="carForm.code" autocomplete="off" placeholder="必須項目"></el-input>
-       </el-form-item>
-       <el-form-item label="車種名" :label-width="formLabelWidth">
-         <el-input v-model="carForm.name" autocomplete="off"></el-input>
-       </el-form-item>
-     </el-form>
-     <span slot="footer" class="dialog-footer">
-       <el-button @click="cancel()">キャンセル</el-button>
-       <el-button type="primary" @click="putCar(carForm)">決定</el-button>
-     </span>
-   </el-dialog>
+      <el-dialog title="注意" :visible.sync="alertVisible">
+        <span>内容が保存されませんがよろしいですか？</span>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="alertVisible=false">続ける</el-button>
+          <el-button type="primary" @click="cancel()">決定</el-button>
+        </span>
+      </el-dialog>
    </div>
 </template>
 
@@ -62,6 +69,7 @@
         formLabelWidth: '120px',
         createFormVisible: false,
         editFormVisible: false,
+        alertVisible: false
       }
     },
     methods: {
@@ -93,6 +101,7 @@
         })
       },
       cancel: async function() {
+      this.alertVisible = false
         this.createFormVisible = false
         this.editFormVisible = false
         this.$emit("refresh")
@@ -101,6 +110,9 @@
           message: 'キャンセルしました',
           type: 'warning'
         })
+      },
+      alert: async function() {
+        this.alertVisible = true
       }
     }
   }
