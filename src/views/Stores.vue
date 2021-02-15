@@ -1,15 +1,9 @@
 <template>
-    <CarForm/>
+    <div></div>
 </template>
 
 <script>
-import CarForm from '../components/forms/CarForm.vue'
 
-export default {
-    components: {
-        CarForm
-    }
-}
 
 </script>
 

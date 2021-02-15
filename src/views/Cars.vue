@@ -1,6 +1,23 @@
 <template>
+    <div class="car">
+
     <el-row>
-        <el-col :span="24">
+        <el-col id="create">
+            <el-button type="success">新規作成</el-button>
+        </el-col>
+        <el-col>
+            <div style="margin-top: 15px;">
+              <el-input placeholder="キーワードを入力" v-model="keyword">
+                <el-select v-model="select" slot="prepend" placeholder="検索条件">
+                  <el-option label="code" value="1"></el-option>
+                  <el-option label="name" value="2"></el-option>
+                </el-select>
+                <el-button slot="append" icon="el-icon-search"></el-button>
+              </el-input>
+            </div>
+        </el-col>
+
+        <el-col :span="24" id="data">
             <el-card class="box-card">
                 <div slot="header" class="clearfix">
                     <span>車種一覧</span>
@@ -46,6 +63,7 @@
             </el-card>
         </el-col>
     </el-row>
+    </div>
 </template>
 
 <script>
@@ -58,6 +76,8 @@
     },
     data () {
       return {
+        select: '',
+        keyword: '',
         cars: []
       }
     },
@@ -84,6 +104,14 @@
   }
 </script>
 
-<style scoped lang="scss">
-    @import "../../public/css/base";
+<style lang="scss">
+
+#create {
+   text-align: right;
+}
+
+#data {
+   text-align: center;
+}
+
 </style>
