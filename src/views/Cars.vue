@@ -27,6 +27,7 @@
                         :data="cars"
                         style="width: 100%">
                     <el-table-column
+                            fixed
                             prop="code"
                             label="車種コード"
                             width="300"/>
@@ -46,14 +47,6 @@
                                 icon="el-icon-edit"
                                 round
                                 @click="editCar(scope.row)"/>
-                            </template>
-                    </el-table-column>
-                    <el-table-column
-                            prop="operation"
-                            label="削除"
-                            width="200"
-                            align="center">
-                            <template slot-scope="scope">
                                 <el-button
                                 size="mini"
                                 type="danger"
