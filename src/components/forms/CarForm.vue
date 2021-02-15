@@ -1,23 +1,33 @@
 <template>
    <div class="car">
 
-   <el-button size="mini"
-              type="primary"
-              icon="el-icon-edit"
-              round @click="editCar()"></el-button>
-
-   <el-dialog title="車種入力" :visible.sync="carFormVisible">
-     <el-form :model="carform">
+   <el-dialog title="車種登録" :visible.sync="createFormVisible">
+     <el-form :model="carForm">
        <el-form-item label="車種コード" :label-width="formLabelWidth">
-         <el-input v-model="carform.code" autocomplete="off" placeholder="必須項目"></el-input>
+         <el-input v-model="carForm.code" autocomplete="off" placeholder="必須項目"></el-input>
        </el-form-item>
        <el-form-item label="車種名" :label-width="formLabelWidth">
-         <el-input v-model="carform.name" autocomplete="off"></el-input>
+         <el-input v-model="carForm.name" autocomplete="off"></el-input>
        </el-form-item>
      </el-form>
      <span slot="footer" class="dialog-footer">
-       <el-button @click="carFormVisible = false">キャンセル</el-button>
-       <el-button type="primary" @click="putCar(carform)">決定</el-button>
+       <el-button @click="cancel()">キャンセル</el-button>
+       <el-button type="primary" @click="postCar(carForm)">決定</el-button>
+     </span>
+   </el-dialog>
+
+   <el-dialog title="車種編集" :visible.sync="editFormVisible">
+     <el-form :model="carForm">
+       <el-form-item label="車種コード" :label-width="formLabelWidth">
+         <el-input v-model="carForm.code" autocomplete="off" placeholder="必須項目"></el-input>
+       </el-form-item>
+       <el-form-item label="車種名" :label-width="formLabelWidth">
+         <el-input v-model="carForm.name" autocomplete="off"></el-input>
+       </el-form-item>
+     </el-form>
+     <span slot="footer" class="dialog-footer">
+       <el-button @click="cancel()">キャンセル</el-button>
+       <el-button type="primary" @click="putCar(carForm)">決定</el-button>
      </span>
    </el-dialog>
    </div>
@@ -28,41 +38,68 @@
 
   export default {
     props: {
-      id: {
-        type: Number
-      },
-      code: {
-        type: String,
-        default: ''
-      },
-      name: {
-        type: String,
-        default: ''
+      car: {
+        id: {
+          type: Number
+        },
+        code: {
+          type: String,
+          default: ''
+        },
+        name: {
+          type: String,
+          default: ''
+        }
       }
     },
     data() {
       return {
-        carFormVisible: false,
-        carform: {
-          id: this.id,
-          code: this.code,
-          name: this.name
+        carForm: {
+          id: '',
+          code: '',
+          name: ''
         },
-        formLabelWidth: '120px'
+        formLabelWidth: '120px',
+        createFormVisible: false,
+        editFormVisible: false,
       }
     },
     methods: {
-      editCar: async function () {
-        this.carFormVisible = true;
+      createCar: async function () {
+         this.createFormVisible = true;
       },
-      putCar: async function(carform) {
-        await axios.put('http://localhost:8080/v1/cars/' + carform.id + '/update', carform)
-        this.carFormVisible = false
+      postCar: async function(carForm) {
+        await axios.post('http://localhost:8080/v1/cars/create', carForm)
+        this.createFormVisible = false
+        this.$emit("refresh")
+        this.$message({
+          showClose: true,
+          message: 'レコードを登録しました',
+          type: 'success'
+        })
+      },
+      editCar: async function (car) {
+        this.editFormVisible = true;
+        this.carForm = car
+      },
+      putCar: async function(carForm) {
+        await axios.put('http://localhost:8080/v1/cars/' + carForm.id + '/update', carForm)
+        this.editFormVisible = false
         this.$emit("refresh")
         this.$message({
           showClose: true,
           message: 'レコードを編集しました',
           type: 'success'
+        })
+      },
+      cancel: async function() {
+        this.createFormVisible = false
+        this.editFormVisible = false
+        this.$emit("refresh")
+        this.$message({
+          showClose: true,
+          message: 'キャンセルしました',
+          type: 'warning'
         })
       }
     }
