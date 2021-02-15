@@ -2,32 +2,32 @@
    <div class="car">
 
    <el-dialog title="車種登録" :visible.sync="createFormVisible">
-     <el-form :model="carform">
+     <el-form :model="carForm">
        <el-form-item label="車種コード" :label-width="formLabelWidth">
-         <el-input v-model="carform.code" autocomplete="off" placeholder="必須項目"></el-input>
+         <el-input v-model="carForm.code" autocomplete="off" placeholder="必須項目"></el-input>
        </el-form-item>
        <el-form-item label="車種名" :label-width="formLabelWidth">
-         <el-input v-model="carform.name" autocomplete="off"></el-input>
+         <el-input v-model="carForm.name" autocomplete="off"></el-input>
        </el-form-item>
      </el-form>
      <span slot="footer" class="dialog-footer">
        <el-button @click="cancel()">キャンセル</el-button>
-       <el-button type="primary" @click="postCar(carform)">決定</el-button>
+       <el-button type="primary" @click="postCar(carForm)">決定</el-button>
      </span>
    </el-dialog>
 
    <el-dialog title="車種編集" :visible.sync="editFormVisible">
-     <el-form :model="carform">
+     <el-form :model="carForm">
        <el-form-item label="車種コード" :label-width="formLabelWidth">
-         <el-input v-model="carform.code" autocomplete="off" placeholder="必須項目"></el-input>
+         <el-input v-model="carForm.code" autocomplete="off" placeholder="必須項目"></el-input>
        </el-form-item>
        <el-form-item label="車種名" :label-width="formLabelWidth">
-         <el-input v-model="carform.name" autocomplete="off"></el-input>
+         <el-input v-model="carForm.name" autocomplete="off"></el-input>
        </el-form-item>
      </el-form>
      <span slot="footer" class="dialog-footer">
        <el-button @click="cancel()">キャンセル</el-button>
-       <el-button type="primary" @click="putCar(carform)">決定</el-button>
+       <el-button type="primary" @click="putCar(carForm)">決定</el-button>
      </span>
    </el-dialog>
    </div>
@@ -54,7 +54,7 @@
     },
     data() {
       return {
-        carform: {
+        carForm: {
           id: '',
           code: '',
           name: ''
@@ -68,8 +68,8 @@
       createCar: async function () {
          this.createFormVisible = true;
       },
-      postCar: async function(carform) {
-        await axios.post('http://localhost:8080/v1/cars/create', carform)
+      postCar: async function(carForm) {
+        await axios.post('http://localhost:8080/v1/cars/create', carForm)
         this.createFormVisible = false
         this.$emit("refresh")
         this.$message({
@@ -80,10 +80,10 @@
       },
       editCar: async function (car) {
         this.editFormVisible = true;
-        this.carform = car
+        this.carForm = car
       },
-      putCar: async function(carform) {
-        await axios.put('http://localhost:8080/v1/cars/' + carform.id + '/update', carform)
+      putCar: async function(carForm) {
+        await axios.put('http://localhost:8080/v1/cars/' + carForm.id + '/update', carForm)
         this.editFormVisible = false
         this.$emit("refresh")
         this.$message({
