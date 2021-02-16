@@ -4,7 +4,8 @@
 
     <el-row>
         <el-col id="create">
-            <el-button type="success" @click="createCar()">新規作成</el-button>
+            <el-button type="success" round @click="createCar()">新規作成</el-button>
+            <el-button type="info" round @click="refresh()">検索クリア</el-button>
         </el-col>
         <el-col>
             <div style="margin-top: 15px;">
@@ -13,7 +14,7 @@
                   <el-option label="code" value="code"></el-option>
                   <el-option label="name" value="name"></el-option>
                 </el-select>
-                <el-button slot="append" icon="el-icon-search"></el-button>
+                <el-button slot="append" icon="el-icon-search" @click="searchCar()"></el-button>
               </el-input>
             </div>
         </el-col>
@@ -101,6 +102,11 @@
             type: 'success'
           })
         }
+      },
+      searchCar: async function() {
+        var request = 'select=' + this.select + '&keyword=' + this.keyword
+        const res = await axios.get('http://localhost:8080/v1/cars/search?' + request)
+        this.cars = res.data.cars
       }
     }
   }
