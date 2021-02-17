@@ -1,8 +1,10 @@
 <template>
     <div class="cardetail">
+    <CarDetailForm ref="CarDetailForm" @refresh="refresh"/>
+
     <el-row>
         <el-col id="create">
-            <el-button type="success" round>新規作成</el-button>
+            <el-button type="success" round @click="createCarDetail()">新規作成</el-button>
             <el-button type="info" round @click="refresh()">検索クリア</el-button>
         </el-col>
         <el-col>
@@ -79,20 +81,20 @@
                             label="編集"
                             width="200"
                             align="center">
-
+                            <template slot-scope="scope">
                                 <el-button
                                 size="mini"
                                 type="primary"
                                 icon="el-icon-edit"
                                 round
-                                />
+                                @click="editCarDetail(scope.row)"/>
                                 <el-button
                                 size="mini"
                                 type="danger"
                                 icon="el-icon-delete"
                                 round
-                                />
-
+                                @click="deleteCarDetail(scope.row)"/>
+                            </template>
                     </el-table-column>
                 </el-table>
             </el-card>
@@ -103,10 +105,11 @@
 
 <script>
   import axios from 'axios'
+  import CarDetailForm from '../components/forms/CarDetailForm.vue'
 
   export default {
     components: {
-
+       CarDetailForm
     },
     data () {
       return {
@@ -130,6 +133,23 @@
       },
       filterCarDetail: async function() {
          this.list = this.carDetails.filter(detail => detail.car.code == this.target)
+      },
+      createCarDetail: async function() {
+         this.$refs.CarDetailForm.createCarDetail()
+      },
+      editCarDetail: async function(car) {
+         this.$refs.CarDetailForm.editCarDetail(car)
+      },
+      deleteCarDetail: async function (row) {
+        if(confirm('削除してもよろしいですか?')) {
+          await axios.delete('http://localhost:8080/v1/cardetails/' + row.id + '/delete')
+          await this.refresh()
+          this.$message({
+            showClose: true,
+            message: 'レコードを削除しました',
+            type: 'success'
+          })
+        }
       }
     }
   }
