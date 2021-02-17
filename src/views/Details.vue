@@ -31,9 +31,19 @@
                         style="width: 100%">
                     <el-table-column type="expand" fixed>
                        <template slot-scope="props">
-                         <p>車種名: {{ props.row.car.name }}</p>
-                         <p>URL: {{ props.row.url }}</p>
-                         <p>備考: {{ props.row.note }}</p>
+                          <p>車種名 : {{ props.row.car.name }}</p>
+                          <p>URL : {{ props.row.url }}</p>
+                          <p>備考 : {{ props.row.note }}</p>
+                          <el-popover
+                            placement="right"
+                            width="400"
+                            trigger="click">
+                            <el-table :data="props.row.prices">
+                              <el-table-column width="150" property="date" label="販売日" sortable></el-table-column>
+                              <el-table-column width="200" property="price" label="価格(万円)" sortable></el-table-column>
+                            </el-table>
+                            <el-button slot="reference">販売レコード一覧</el-button>
+                          </el-popover>
                        </template>
                     </el-table-column>
                     <el-table-column
@@ -66,12 +76,12 @@
                             sortable
                             width="100"/>
                     <el-table-column
-                            prop=""
+                            prop="prices[0].date"
                             label="最新販売日"
                             sortable
                             width="150"/>
                     <el-table-column
-                            prop=""
+                            prop="prices[0].price"
                             label="販売価格"
                             sortable
                             width="100"/>
@@ -133,6 +143,7 @@
       },
       filterCarDetail: async function() {
          this.list = this.carDetails.filter(detail => detail.car.code == this.target)
+         console.log(this.list)
       },
       createCarDetail: async function() {
          this.$refs.CarDetailForm.createCarDetail()
