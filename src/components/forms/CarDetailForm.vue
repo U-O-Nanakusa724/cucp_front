@@ -12,9 +12,9 @@
         </span>
       </el-dialog>
 
-      <el-dialog title="車種編集" :visible.sync="editFormVisible" :before-close="alert">
+      <el-dialog title="車種詳細編集" :visible.sync="editFormVisible" :before-close="alert">
         <el-form :model="carDetailForm">
-          <el-form-item label="車種コード" :label-width="formLabelWidth">
+          <el-form-item label="XXXX" :label-width="formLabelWidth">
             <el-input v-model="carDetailForm.code" autocomplete="off" placeholder="必須項目"></el-input>
           </el-form-item>
         </el-form>
