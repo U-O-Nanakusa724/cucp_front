@@ -8,14 +8,14 @@
         <el-col>
             <div style="margin-top: 15px;">
 
-            <el-select v-model="car" placeholder="車種絞り込み">
-                <el-option v-for="car in cars"
-                    :key="car.id"
-                    :label="car.code"
-                    :value="car">
+            <el-select v-model="target" placeholder="車種">
+                <el-option v-for="item in cars"
+                    :key="item.id"
+                    :label="item.code"
+                    :value="item.code">
                 </el-option>
                 </el-select>
-            <el-button slot="append" icon="el-icon-search" @click="filterCarDetail()"></el-button>
+            <el-button slot="append" icon="el-icon-success" @click="filterCarDetail()"></el-button>
 
             </div>
         </el-col>
@@ -25,14 +25,26 @@
                     <span>車種詳細一覧</span>
                 </div>
                 <el-table
-                        :data="carDetails"
+                        :data="list"
                         style="width: 100%">
+                    <el-table-column type="expand" fixed>
+                       <template slot-scope="props">
+                         <p>車種名: {{ props.row.car.name }}</p>
+                         <p>URL: {{ props.row.url }}</p>
+                         <p>備考: {{ props.row.note }}</p>
+                       </template>
+                    </el-table-column>
                     <el-table-column
                             fixed
                             prop="car.code"
                             label="車種コード"
                             sortable
                             width="150"/>
+                    <el-table-column
+                            prop="store.name"
+                            label="販売店"
+                            sortable
+                            width="200"/>
                     <el-table-column
                             prop="color"
                             label="色"
@@ -52,9 +64,15 @@
                             sortable
                             width="100"/>
                     <el-table-column
-                            prop="note"
-                            label="備考"
-                            width="200"/>
+                            prop=""
+                            label="最新販売日"
+                            sortable
+                            width="150"/>
+                    <el-table-column
+                            prop=""
+                            label="販売価格"
+                            sortable
+                            width="100"/>
                     <el-table-column
                             fixed="right"
                             prop="operation"
@@ -94,21 +112,24 @@
       return {
         cars: [],
         carDetails: [],
-        car: ''
+        list: [],
+        target: ''
       }
     },
     created: async function () {
+      const car_res = await axios.get('http://localhost:8080/v1/cars')
+      this.cars = car_res.data.cars
       await this.refresh()
     },
     methods: {
       refresh: async function () {
-        const car_res = await axios.get('http://localhost:8080/v1/cars')
-        this.cars = car_res.data.cars
         const res = await axios.get('http://localhost:8080/v1/cardetails')
         this.carDetails = res.data.carDetails
+        this.list = res.data.carDetails
+        this.target = ''
       },
       filterCarDetail: async function() {
-        console.log(this.car)
+         this.list = this.carDetails.filter(detail => detail.car.code == this.target)
       }
     }
   }
