@@ -32,8 +32,8 @@
                     <el-table-column type="expand" fixed>
                        <template slot-scope="props">
                           <p>車種名 : {{ props.row.car.name }}</p>
-                          <p>URL : {{ props.row.url }}</p>
                           <p>備考 : {{ props.row.note }}</p>
+                          <p>URL : {{ props.row.url }}<el-button slot="reference" @click="openURL(props.row.url)">開く</el-button></p>
                           <el-popover
                             placement="right"
                             width="400"
@@ -161,6 +161,9 @@
             type: 'success'
           })
         }
+      },
+      openURL: async function(url) {
+        window.open(url, '_blank')
       }
     }
   }
