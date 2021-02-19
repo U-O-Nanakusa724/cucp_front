@@ -1,119 +1,303 @@
 <template>
-   <div class="carDetail">
-      <el-dialog title="車種詳細登録" :visible.sync="createFormVisible" :before-close="alert">
-        <el-form :model="carDetailForm">
-          <el-form-item label="XXXX" :label-width="formLabelWidth">
-            <el-input v-model="carDetailForm.code" autocomplete="off" placeholder="必須項目"></el-input>
-          </el-form-item>
-        </el-form>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="cancel()">キャンセル</el-button>
-          <el-button type="primary">決定</el-button>
-        </span>
-      </el-dialog>
+  <div class="carDetail">
+    <el-dialog
+      title="車種詳細登録"
+      :visible.sync="createFormVisible"
+      :before-close="alert"
+    >
+      <el-form :model="carDetailForm">
+        <el-form-item label="車種" :label-width="formLabelWidth">
+          <el-select
+            v-model="carDetailForm.car.id"
+            placeholder="車種、必須項目"
+          >
+            <el-option
+              v-for="item in cars"
+              :key="item.id"
+              :label="item.code"
+              :value="item.id"
+            >
+            </el-option>
+          </el-select>
+          <el-button slot="append">車種を追加する</el-button>
+        </el-form-item>
+        <el-form-item label="販売店" :label-width="formLabelWidth">
+          <el-select
+            v-model="carDetailForm.store.id"
+            placeholder="販売店、必須項目"
+          >
+            <el-option
+              v-for="item in cars"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            >
+            </el-option>
+          </el-select>
+          <el-button slot="append">販売店を追加する</el-button>
+        </el-form-item>
 
-      <el-dialog title="車種詳細編集" :visible.sync="editFormVisible" :before-close="alert">
-        <el-form :model="carDetailForm">
-          <el-form-item label="XXXX" :label-width="formLabelWidth">
-            <el-input v-model="carDetailForm.code" autocomplete="off" placeholder="必須項目"></el-input>
-          </el-form-item>
-        </el-form>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="alertVisible=true">キャンセル</el-button>
-          <el-button type="primary">決定</el-button>
-        </span>
-      </el-dialog>
+        <el-form-item label="色" :label-width="formLabelWidth">
+          <el-input
+            v-model="carDetailForm.color"
+            autocomplete="off"
+            placeholder="64文字まで"
+          ></el-input>
+        </el-form-item>
 
-      <el-dialog title="注意" :visible.sync="alertVisible">
-        <span>内容が保存されませんがよろしいですか？</span>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="alertVisible=false">続ける</el-button>
-          <el-button type="primary" @click="cancel()">決定</el-button>
-        </span>
-      </el-dialog>
-   </div>
+        <el-form-item label="走行距離" :label-width="formLabelWidth">
+          <el-input
+            v-model="carDetailForm.distance"
+            autocomplete="off"
+            placeholder="小数入力"
+          ></el-input>
+        </el-form-item>
+
+        <el-form-item label="ミッション" :label-width="formLabelWidth">
+          <el-input
+            v-model="carDetailForm.mission"
+            autocomplete="off"
+            placeholder="8文字まで"
+          ></el-input>
+        </el-form-item>
+
+        <el-form-item label="年式" :label-width="formLabelWidth">
+          <el-input
+            v-model="carDetailForm.model_year"
+            autocomplete="off"
+            placeholder="8文字まで"
+          ></el-input>
+        </el-form-item>
+
+        <el-form-item label="URL" :label-width="formLabelWidth">
+          <el-input
+            v-model="carDetailForm.url"
+            autocomplete="off"
+            placeholder="255文字まで"
+          ></el-input>
+        </el-form-item>
+
+        <el-form-item label="備考" :label-width="formLabelWidth">
+          <el-input
+            v-model="carDetailForm.note"
+            autocomplete="off"
+            placeholder="64文字まで"
+          ></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="cancel()">キャンセル</el-button>
+        <el-button type="primary" @click="postCarDetail(carDetailForm)"
+          >決定</el-button
+        >
+      </span>
+    </el-dialog>
+
+    <el-dialog
+      title="車種詳細編集"
+      :visible.sync="editFormVisible"
+      :before-close="alert"
+    >
+      <el-form :model="carDetailForm">
+        <el-form-item label="車種" :label-width="formLabelWidth">
+          <el-input
+            v-model="carDetailForm.car.code"
+            autocomplete="off"
+            disabled
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="販売店" :label-width="formLabelWidth">
+          <el-select
+            value-key="name"
+            v-model="carDetailForm.store.name"
+            placeholder="販売店、必須項目"
+          >
+            <el-option
+              v-for="item in cars"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            >
+            </el-option>
+          </el-select>
+          <el-button slot="append">販売店を追加する</el-button>
+        </el-form-item>
+
+        <el-form-item label="色" :label-width="formLabelWidth">
+          <el-input
+            v-model="carDetailForm.color"
+            autocomplete="off"
+            placeholder="64文字まで"
+          ></el-input>
+        </el-form-item>
+
+        <el-form-item label="走行距離" :label-width="formLabelWidth">
+          <el-input
+            v-model="carDetailForm.distance"
+            autocomplete="off"
+            placeholder="小数入力"
+          ></el-input>
+        </el-form-item>
+
+        <el-form-item label="ミッション" :label-width="formLabelWidth">
+          <el-input
+            v-model="carDetailForm.mission"
+            autocomplete="off"
+            placeholder="8文字まで"
+          ></el-input>
+        </el-form-item>
+
+        <el-form-item label="年式" :label-width="formLabelWidth">
+          <el-input
+            v-model="carDetailForm.model_year"
+            autocomplete="off"
+            placeholder="8文字まで"
+          ></el-input>
+        </el-form-item>
+
+        <el-form-item label="URL" :label-width="formLabelWidth">
+          <el-input
+            v-model="carDetailForm.url"
+            autocomplete="off"
+            placeholder="255文字まで"
+          ></el-input>
+        </el-form-item>
+
+        <el-form-item label="備考" :label-width="formLabelWidth">
+          <el-input
+            v-model="carDetailForm.note"
+            autocomplete="off"
+            placeholder="64文字まで"
+          ></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="alertVisible = true">キャンセル</el-button>
+        <el-button type="primary" @click="putCarDetail(carDetailForm)"
+          >決定</el-button
+        >
+      </span>
+    </el-dialog>
+
+    <el-dialog title="注意" :visible.sync="alertVisible">
+      <span>内容が保存されませんがよろしいですか？</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="alertVisible = false">続ける</el-button>
+        <el-button type="primary" @click="cancel()">決定</el-button>
+      </span>
+    </el-dialog>
+  </div>
 </template>
 
 <script>
-  import axios from 'axios'
+import axios from "axios";
 
-  export default {
-    props: {
-      carDetail: {
-        id: {
-          type: Number
+export default {
+  data() {
+    return {
+      cars: [],
+      stores: [],
+      carDetailForm: {
+        id: "",
+        car: {
+          id: "",
+          code: "",
+          name: "",
         },
-        code: {
-          type: String,
-          default: ''
+        store: {
+          id: "",
+          name: "",
         },
-        name: {
-          type: String,
-          default: ''
-        }
+        color: "",
+        distance: "",
+        mission: "",
+        model_year: "",
+        url: "",
+        note: "",
+      },
+      formLabelWidth: "120px",
+      createFormVisible: false,
+      editFormVisible: false,
+      alertVisible: false,
+    };
+  },
+  methods: {
+    setup: async function () {
+      const res = await axios.get("http://localhost:8080/v1/cars");
+      this.cars = res.data.cars;
+    },
+    createCarDetail: async function () {
+      this.createFormVisible = true;
+      this.setup();
+    },
+    postCarDetail: async function (carDetailForm) {
+      await axios.post(
+        "http://localhost:8080/v1/cardetails/create",
+        carDetailForm
+      );
+      this.createFormVisible = false;
+      this.formClear()
+      this.$emit("refresh");
+      this.$message({
+        showClose: true,
+        message: "レコードを登録しました",
+        type: "success",
+      });
+    },
+    editCarDetail: async function (carDetail) {
+      this.editFormVisible = true;
+      this.carDetailForm = carDetail;
+      this.setup();
+    },
+    putCarDetail: async function (carDetailForm) {
+      await axios.put(
+        "http://localhost:8080/v1/cardetails/update",
+        carDetailForm
+      );
+      this.editFormVisible = false;
+      this.formClear()
+      this.$emit("refresh");
+      this.$message({
+        showClose: true,
+        message: "レコードを編集しました",
+        type: "success",
+      });
+    },
+    cancel: async function () {
+      this.alertVisible = false;
+      this.createFormVisible = false;
+      this.editFormVisible = false;
+      this.formClear()
+      this.$emit("refresh");
+      this.$message({
+        showClose: true,
+        message: "キャンセルしました",
+        type: "warning",
+      });
+    },
+    alert: async function () {
+      this.alertVisible = true;
+    },
+    formClear: async function () {
+      this.carDetailForm = {
+        id: "",
+        car: {
+          id: "",
+          code: "",
+          name: "",
+        },
+        store: {
+          id: "",
+          name: "",
+        },
+        color: "",
+        distance: "",
+        mission: "",
+        model_year: "",
+        url: "",
+        note: "",
       }
     },
-    data() {
-      return {
-        cars: [],
-        stores: [],
-        carDetailForm: {
-          id: '',
-          code: '',
-          name: ''
-        },
-        formLabelWidth: '120px',
-        createFormVisible: false,
-        editFormVisible: false,
-        alertVisible: false
-      }
-    },
-    methods: {
-      setup: async function () {
-        const res = await axios.get('http://localhost:8080/v1/cars')
-        this.cars = res.data.cars
-      },
-      createCarDetail: async function () {
-        this.createFormVisible = true;
-      },
-      postCarDetail: async function(carDetailForm) {
-        await axios.post('http://localhost:8080/v1/cardetails/create', carDetailForm)
-        this.createFormVisible = false
-        this.$emit("refresh")
-        this.$message({
-          showClose: true,
-          message: 'レコードを登録しました',
-          type: 'success'
-        })
-      },
-      editCarDetail: async function (carDetail) {
-        this.editFormVisible = true;
-        this.carDetailForm = carDetail
-      },
-      putCarDetail: async function(carDetailForm) {
-        await axios.put('http://localhost:8080/v1/cardetails/' + carDetailForm.id + '/update', carDetailForm)
-        this.editFormVisible = false
-        this.$emit("refresh")
-        this.$message({
-          showClose: true,
-          message: 'レコードを編集しました',
-          type: 'success'
-        })
-      },
-      cancel: async function() {
-      this.alertVisible = false
-        this.createFormVisible = false
-        this.editFormVisible = false
-        this.$emit("refresh")
-        this.$message({
-          showClose: true,
-          message: 'キャンセルしました',
-          type: 'warning'
-        })
-      },
-      alert: async function() {
-        this.alertVisible = true
-      }
-    }
-  }
+  },
+};
 </script>

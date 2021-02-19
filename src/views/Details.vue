@@ -5,7 +5,7 @@
     <el-row>
         <el-col id="create">
             <el-button type="success" round @click="createCarDetail()">新規作成</el-button>
-            <el-button type="info" round @click="refresh()">検索クリア</el-button>
+            <el-button type="info" round @click="refresh()">絞り込みクリア</el-button>
         </el-col>
         <el-col>
             <div style="margin-top: 15px;">
@@ -26,6 +26,11 @@
                 <div slot="header" class="clearfix">
                     <span>車種詳細一覧</span>
                 </div>
+
+                <div v-if="loading">
+                    <span>データ取得中...</span>
+                </div>
+                <div v-else>
                 <el-table
                         :data="list"
                         style="width: 100%">
@@ -39,7 +44,7 @@
                             width="400"
                             trigger="click">
                             <el-table :data="props.row.prices">
-                              <el-table-column width="150" property="date" label="販売日" sortable></el-table-column>
+                              <el-table-column width="150" property="date" label="確認日" sortable></el-table-column>
                               <el-table-column width="200" property="price" label="価格(万円)" sortable></el-table-column>
                             </el-table>
                             <el-button slot="reference">販売レコード一覧</el-button>
@@ -77,12 +82,12 @@
                             width="100"/>
                     <el-table-column
                             prop="prices[0].date"
-                            label="最新販売日"
+                            label="最新確認日"
                             sortable
                             width="150"/>
                     <el-table-column
                             prop="prices[0].price"
-                            label="販売価格"
+                            label="価格"
                             sortable
                             width="100"/>
                     <el-table-column
@@ -107,6 +112,7 @@
                             </template>
                     </el-table-column>
                 </el-table>
+                </div>
             </el-card>
         </el-col>
     </el-row>
@@ -124,9 +130,11 @@
     data () {
       return {
         cars: [],
+        stores: [],
         carDetails: [],
         list: [],
-        target: ''
+        target: '',
+        loading: true
       }
     },
     created: async function () {
@@ -136,10 +144,13 @@
     },
     methods: {
       refresh: async function () {
+        this.loading = true
         const res = await axios.get('http://localhost:8080/v1/cardetails')
+        this.master = res.data.carDetails
         this.carDetails = res.data.carDetails
         this.list = res.data.carDetails
         this.target = ''
+        this.loading = false
       },
       filterCarDetail: async function() {
          this.list = this.carDetails.filter(detail => detail.car.code == this.target)
@@ -148,7 +159,7 @@
       createCarDetail: async function() {
          this.$refs.CarDetailForm.createCarDetail()
       },
-      editCarDetail: async function(car) {
+      editCarDetail: function(car) {
          this.$refs.CarDetailForm.editCarDetail(car)
       },
       deleteCarDetail: async function (row) {
