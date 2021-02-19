@@ -44,21 +44,6 @@
   import axios from 'axios'
 
   export default {
-    props: {
-      car: {
-        id: {
-          type: Number
-        },
-        code: {
-          type: String,
-          default: ''
-        },
-        name: {
-          type: String,
-          default: ''
-        }
-      }
-    },
     data() {
       return {
         carForm: {
@@ -79,6 +64,7 @@
       postCar: async function(carForm) {
         await axios.post('http://localhost:8080/v1/cars/create', carForm)
         this.createFormVisible = false
+        this.formClear()
         this.$emit("refresh")
         this.$message({
           showClose: true,
@@ -91,8 +77,9 @@
         this.carForm = car
       },
       putCar: async function(carForm) {
-        await axios.put('http://localhost:8080/v1/cars/' + carForm.id + '/update', carForm)
+        await axios.put('http://localhost:8080/v1/cars/update', carForm)
         this.editFormVisible = false
+        this.formClear()
         this.$emit("refresh")
         this.$message({
           showClose: true,
@@ -101,9 +88,10 @@
         })
       },
       cancel: async function() {
-      this.alertVisible = false
+        this.alertVisible = false
         this.createFormVisible = false
         this.editFormVisible = false
+        this.formClear()
         this.$emit("refresh")
         this.$message({
           showClose: true,
@@ -113,6 +101,13 @@
       },
       alert: async function() {
         this.alertVisible = true
+      },
+      formClear: async function() {
+        this.carForm = {
+          id: '',
+          code: '',
+          name: ''
+        }
       }
     }
   }

@@ -5,7 +5,7 @@
     <el-row>
         <el-col id="create">
             <el-button type="success" round @click="createCarDetail()">新規作成</el-button>
-            <el-button type="info" round @click="refresh()">検索クリア</el-button>
+            <el-button type="info" round @click="refresh()">絞り込みクリア</el-button>
         </el-col>
         <el-col>
             <div style="margin-top: 15px;">
@@ -130,6 +130,7 @@
     data () {
       return {
         cars: [],
+        stores: [],
         carDetails: [],
         list: [],
         target: '',
@@ -145,6 +146,7 @@
       refresh: async function () {
         this.loading = true
         const res = await axios.get('http://localhost:8080/v1/cardetails')
+        this.master = res.data.carDetails
         this.carDetails = res.data.carDetails
         this.list = res.data.carDetails
         this.target = ''
@@ -157,7 +159,7 @@
       createCarDetail: async function() {
          this.$refs.CarDetailForm.createCarDetail()
       },
-      editCarDetail: async function(car) {
+      editCarDetail: function(car) {
          this.$refs.CarDetailForm.editCarDetail(car)
       },
       deleteCarDetail: async function (row) {
