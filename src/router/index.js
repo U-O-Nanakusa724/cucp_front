@@ -10,19 +10,24 @@ const routes = [
     component: () => import(/* webpackChunkName: "cars" */ '../views/SignIn.vue')
   },
   {
-     path: '/cars',
-     name: 'cars',
-     component: () => import(/* webpackChunkName: "cars" */ '../views/Cars.vue')
+    path: '/graph',
+    name: 'graph',
+    component: () => import(/* webpackChunkName: "graph" */ '../views/Graph.vue')
   },
   {
-     path: '/stores',
-     name: 'stores',
-     component: () => import(/* webpackChunkName: "cars" */ '../views/Stores.vue')
+    path: '/cars',
+    name: 'cars',
+    component: () => import(/* webpackChunkName: "cars" */ '../views/Cars.vue')
   },
   {
-     path: '/details',
-     name: 'details',
-     component: () => import(/* webpackChunkName: "cars" */ '../views/Details.vue')
+    path: '/stores',
+    name: 'stores',
+    component: () => import(/* webpackChunkName: "cars" */ '../views/Stores.vue')
+  },
+  {
+    path: '/details',
+    name: 'details',
+    component: () => import(/* webpackChunkName: "cars" */ '../views/Details.vue')
   }
 ]
 
