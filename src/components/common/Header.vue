@@ -2,10 +2,10 @@
   <div id="header">
     <div id="header-nav">
       <router-link to="/signin">SignIn</router-link> |
-      <router-link to="../graph">Graph</router-link> |
-      <router-link to="../cars">Cars</router-link> |
-      <router-link to="../stores">Stores</router-link> |
-      <router-link to="../details">Details</router-link>
+      <router-link to="/graph">Graph</router-link> |
+      <router-link to="/cars">Cars</router-link> |
+      <router-link to="/stores">Stores</router-link> |
+      <router-link to="/details">Details</router-link>
     </div>
   </div>
 </template>
