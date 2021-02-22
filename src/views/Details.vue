@@ -130,7 +130,6 @@
     data () {
       return {
         cars: [],
-        stores: [],
         carDetails: [],
         list: [],
         target: '',
@@ -146,7 +145,6 @@
       refresh: async function () {
         this.loading = true
         const res = await axios.get('http://localhost:8080/v1/cardetails')
-        this.master = res.data.carDetails
         this.carDetails = res.data.carDetails
         this.list = res.data.carDetails
         this.target = ''
@@ -154,7 +152,6 @@
       },
       filterCarDetail: async function() {
          this.list = this.carDetails.filter(detail => detail.car.code == this.target)
-         console.log(this.list)
       },
       createCarDetail: async function() {
          this.$refs.CarDetailForm.createCarDetail()
