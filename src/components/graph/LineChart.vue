@@ -56,7 +56,6 @@ export default {
       this.data.labels = this.all.labels;
       this.data.datasets = this.all.datasets;
       this.renderChart(this.data, this.options);
-      this.$emit('finishLoad')
     },
     filterData: async function (target) {
       this.data.labels = this.all.labels;
