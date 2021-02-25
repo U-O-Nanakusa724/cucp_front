@@ -10,6 +10,7 @@ export default {
   name: "chart",
   data() {
     return {
+      graph_apiURL: process.env.VUE_APP_API_ENDPOINT + "graph",
       data: {
         labels: [],
         datasets: [],
@@ -59,7 +60,7 @@ export default {
   },
   methods: {
     getData: async function () {
-      const res = await axios.get("http://localhost:8080/v1/graph");
+      const res = await axios.get(this.graph_apiURL);
       this.all = res.data;
       this.refresh();
     },

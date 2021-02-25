@@ -56,6 +56,7 @@ import axios from "axios";
 export default {
   data() {
     return {
+      store_apiURL: process.env.VUE_APP_API_ENDPOINT + "stores",
       storeForm: {
         id: "",
         name: "",
@@ -71,7 +72,7 @@ export default {
       this.createFormVisible = true;
     },
     postStore: async function (storeForm) {
-      await axios.post("http://localhost:8080/v1/stores/create", storeForm);
+      await axios.post(this.store_apiURL + "/create", storeForm);
       this.createFormVisible = false;
       this.formClear();
       this.$emit("refresh");
@@ -86,7 +87,7 @@ export default {
       this.storeForm = stores;
     },
     putStore: async function (storeForm) {
-      await axios.put("http://localhost:8080/v1/stores/update", storeForm);
+      await axios.put(this.store_apiURL + "/update", storeForm);
       this.editFormVisible = false;
       this.formClear();
       this.$emit("refresh");

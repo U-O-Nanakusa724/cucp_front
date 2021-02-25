@@ -73,6 +73,7 @@ export default {
   },
   data() {
     return {
+      car_apiURL: process.env.VUE_APP_API_ENDPOINT + "cars",
       select: "",
       keyword: "",
       cars: [],
@@ -83,7 +84,7 @@ export default {
   },
   methods: {
     refresh: async function () {
-      const res = await axios.get("http://localhost:8080/v1/cars");
+      const res = await axios.get(this.car_apiURL);
       this.cars = res.data.cars;
     },
     createCar: async function () {
@@ -95,7 +96,7 @@ export default {
     deleteCar: async function (row) {
       if (confirm("削除してもよろしいですか?")) {
         await axios.delete(
-          "http://localhost:8080/v1/cars/" + row.id + "/delete"
+          this.car_apiURL + "/" + row.id + "/delete"
         );
         await this.refresh();
         this.$message({
@@ -108,7 +109,7 @@ export default {
     searchCar: async function () {
       var request = "select=" + this.select + "&keyword=" + this.keyword;
       const res = await axios.get(
-        "http://localhost:8080/v1/cars/search?" + request
+        this.apiURL + "/search?" + request
       );
       this.cars = res.data.cars;
     },

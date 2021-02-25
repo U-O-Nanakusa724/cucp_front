@@ -31,12 +31,13 @@ export default {
   },
   data() {
     return {
+      car_apiURL: process.env.VUE_APP_API_ENDPOINT + "cars",
       cars: [],
       target: '',
     };
   },
   created: async function () {
-    const car_res = await axios.get("http://localhost:8080/v1/cars");
+    const car_res = await axios.get(this.car_apiURL);
     this.cars = car_res.data.cars;
   },
   methods: {
