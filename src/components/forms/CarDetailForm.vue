@@ -108,8 +108,7 @@
         </el-form-item>
         <el-form-item label="販売店" :label-width="formLabelWidth">
           <el-select
-            value-key="name"
-            v-model="carDetailForm.store.name"
+            v-model="carDetailForm.store.id"
             placeholder="販売店、必須項目"
           >
             <el-option
@@ -195,6 +194,9 @@ import axios from "axios";
 export default {
   data() {
     return {
+      detail_apiURL: process.env.VUE_APP_API_ENDPOINT + "cardetails",
+      car_apiURL: process.env.VUE_APP_API_ENDPOINT + "cars",
+      store_apiURL: process.env.VUE_APP_API_ENDPOINT + "stores",
       cars: [],
       stores: [],
       carDetailForm: {
@@ -223,9 +225,9 @@ export default {
   },
   methods: {
     setup: async function () {
-      const cars_res = await axios.get("http://localhost:8080/v1/cars");
+      const cars_res = await axios.get(this.car_apiURL);
       this.cars = cars_res.data.cars;
-      const stores_res = await axios.get("http://localhost:8080/v1/stores");
+      const stores_res = await axios.get(this.store_apiURL);
       this.stores = stores_res.data.stores;
     },
     createCarDetail: async function () {
@@ -234,7 +236,7 @@ export default {
     },
     postCarDetail: async function (carDetailForm) {
       await axios.post(
-        "http://localhost:8080/v1/cardetails/create",
+        this.detail_apiURL + "/create",
         carDetailForm
       );
       this.createFormVisible = false;
@@ -253,7 +255,7 @@ export default {
     },
     putCarDetail: async function (carDetailForm) {
       await axios.put(
-        "http://localhost:8080/v1/cardetails/update",
+        this.detail_apiURL + "/update",
         carDetailForm
       );
       this.editFormVisible = false;

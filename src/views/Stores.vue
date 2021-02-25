@@ -68,6 +68,7 @@ export default {
   },
   data() {
     return {
+      store_apiURL: process.env.VUE_APP_API_ENDPOINT + "stores",
       keyword: "",
       stores: [],
     };
@@ -77,7 +78,7 @@ export default {
   },
   methods: {
     refresh: async function () {
-      const res = await axios.get("http://localhost:8080/v1/stores");
+      const res = await axios.get(this.store_apiURL);
       this.stores = res.data.stores;
     },
     createStore: async function () {
@@ -89,7 +90,7 @@ export default {
     deleteStore: async function (row) {
       if (confirm("削除してもよろしいですか?")) {
         await axios.delete(
-          "http://localhost:8080/v1/stores/" + row.id + "/delete"
+          this.store_apiURL + "/" + row.id + "/delete"
         );
         await this.refresh();
         this.$message({
@@ -101,7 +102,7 @@ export default {
     },
     searchStore: async function () {
       const res = await axios.get(
-        "http://localhost:8080/v1/stores/search?keyword=" + this.keyword
+        this.store_apiURL + "/search?keyword=" + this.keyword
       );
       this.stores = res.data.stores;
     },

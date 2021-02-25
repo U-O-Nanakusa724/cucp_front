@@ -62,6 +62,7 @@ import axios from "axios";
 export default {
   data() {
     return {
+      car_apiURL: process.env.VUE_APP_API_ENDPOINT + "cars",
       carForm: {
         id: "",
         code: "",
@@ -78,7 +79,7 @@ export default {
       this.createFormVisible = true;
     },
     postCar: async function (carForm) {
-      await axios.post("http://localhost:8080/v1/cars/create", carForm);
+      await axios.post(this.car_apiURL + "/create", carForm);
       this.createFormVisible = false;
       this.formClear();
       this.$emit("refresh");
@@ -93,7 +94,7 @@ export default {
       this.carForm = car;
     },
     putCar: async function (carForm) {
-      await axios.put("http://localhost:8080/v1/cars/update", carForm);
+      await axios.put(this.car_apiURL + "/update", carForm);
       this.editFormVisible = false;
       this.formClear();
       this.$emit("refresh");

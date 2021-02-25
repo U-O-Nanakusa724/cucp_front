@@ -152,6 +152,8 @@ export default {
   },
   data() {
     return {
+      detail_apiURL: process.env.VUE_APP_API_ENDPOINT + "cardetails",
+      car_apiURL: process.env.VUE_APP_API_ENDPOINT + "cars",
       cars: [],
       carDetails: [],
       list: [],
@@ -160,14 +162,14 @@ export default {
     };
   },
   created: async function () {
-    const car_res = await axios.get("http://localhost:8080/v1/cars");
+    const car_res = await axios.get(this.car_apiURL);
     this.cars = car_res.data.cars;
     await this.refresh();
   },
   methods: {
     refresh: async function () {
       this.loading = true;
-      const res = await axios.get("http://localhost:8080/v1/cardetails");
+      const res = await axios.get(this.detail_apiURL);
       this.carDetails = res.data.carDetails;
       this.list = res.data.carDetails;
       this.target = "";
@@ -187,7 +189,7 @@ export default {
     deleteCarDetail: async function (row) {
       if (confirm("削除してもよろしいですか?")) {
         await axios.delete(
-          "http://localhost:8080/v1/cardetails/" + row.id + "/delete"
+          this.detail_apiURL + "/" + row.id + "/delete"
         );
         await this.refresh();
         this.$message({
