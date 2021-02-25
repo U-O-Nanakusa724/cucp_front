@@ -1,48 +1,42 @@
 <template>
-  <div class="car">
+  <div class="store">
     <el-dialog
-      title="車種登録"
+      title="販売店登録"
       :visible.sync="createFormVisible"
       :before-close="alert"
     >
-      <el-form :model="carForm">
-        <el-form-item label="車種コード" :label-width="formLabelWidth">
+      <el-form :model="storeForm">
+        <el-form-item label="販売店名" :label-width="formLabelWidth">
           <el-input
-            v-model="carForm.code"
+            v-model="storeForm.name"
             autocomplete="off"
             placeholder="必須項目"
           ></el-input>
-        </el-form-item>
-        <el-form-item label="車種名" :label-width="formLabelWidth">
-          <el-input v-model="carForm.name" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="cancel()">キャンセル</el-button>
-        <el-button type="primary" @click="postCar(carForm)">決定</el-button>
+        <el-button type="primary" @click="postStore(storeForm)">決定</el-button>
       </span>
     </el-dialog>
 
     <el-dialog
-      title="車種編集"
+      title="販売店編集"
       :visible.sync="editFormVisible"
       :before-close="alert"
     >
-      <el-form :model="carForm">
-        <el-form-item label="車種コード" :label-width="formLabelWidth">
+      <el-form :model="storeForm">
+        <el-form-item label="販売店名" :label-width="formLabelWidth">
           <el-input
-            v-model="carForm.code"
+            v-model="storeForm.name"
             autocomplete="off"
             placeholder="必須項目"
           ></el-input>
         </el-form-item>
-        <el-form-item label="車種名" :label-width="formLabelWidth">
-          <el-input v-model="carForm.name" autocomplete="off"></el-input>
-        </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="alertVisible = true">キャンセル</el-button>
-        <el-button type="primary" @click="putCar(carForm)">決定</el-button>
+        <el-button type="primary" @click="putStore(storeForm)">決定</el-button>
       </span>
     </el-dialog>
 
@@ -62,9 +56,8 @@ import axios from "axios";
 export default {
   data() {
     return {
-      carForm: {
+      storeForm: {
         id: "",
-        code: "",
         name: "",
       },
       formLabelWidth: "120px",
@@ -74,11 +67,11 @@ export default {
     };
   },
   methods: {
-    createCar: async function () {
+    createStore: async function () {
       this.createFormVisible = true;
     },
-    postCar: async function (carForm) {
-      await axios.post("http://localhost:8080/v1/cars/create", carForm);
+    postStore: async function (storeForm) {
+      await axios.post("http://localhost:8080/v1/stores/create", storeForm);
       this.createFormVisible = false;
       this.formClear();
       this.$emit("refresh");
@@ -88,12 +81,12 @@ export default {
         type: "success",
       });
     },
-    editCar: async function (car) {
+    editStore: async function (stores) {
       this.editFormVisible = true;
-      this.carForm = car;
+      this.storeForm = stores;
     },
-    putCar: async function (carForm) {
-      await axios.put("http://localhost:8080/v1/cars/update", carForm);
+    putStore: async function (storeForm) {
+      await axios.put("http://localhost:8080/v1/stores/update", storeForm);
       this.editFormVisible = false;
       this.formClear();
       this.$emit("refresh");
@@ -119,9 +112,8 @@ export default {
       this.alertVisible = true;
     },
     formClear: async function () {
-      this.carForm = {
+      this.storeForm = {
         id: "",
-        code: "",
         name: "",
       };
     },
