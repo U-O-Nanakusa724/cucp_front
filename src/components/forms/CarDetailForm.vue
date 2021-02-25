@@ -27,7 +27,7 @@
             placeholder="販売店、必須項目"
           >
             <el-option
-              v-for="item in cars"
+              v-for="item in stores"
               :key="item.id"
               :label="item.name"
               :value="item.id"
@@ -113,7 +113,7 @@
             placeholder="販売店、必須項目"
           >
             <el-option
-              v-for="item in cars"
+              v-for="item in stores"
               :key="item.id"
               :label="item.name"
               :value="item.id"
@@ -223,8 +223,10 @@ export default {
   },
   methods: {
     setup: async function () {
-      const res = await axios.get("http://localhost:8080/v1/cars");
-      this.cars = res.data.cars;
+      const cars_res = await axios.get("http://localhost:8080/v1/cars");
+      this.cars = cars_res.data.cars;
+      const stores_res = await axios.get("http://localhost:8080/v1/stores");
+      this.stores = stores_res.data.stores;
     },
     createCarDetail: async function () {
       this.createFormVisible = true;
@@ -236,7 +238,7 @@ export default {
         carDetailForm
       );
       this.createFormVisible = false;
-      this.formClear()
+      this.formClear();
       this.$emit("refresh");
       this.$message({
         showClose: true,
@@ -255,7 +257,7 @@ export default {
         carDetailForm
       );
       this.editFormVisible = false;
-      this.formClear()
+      this.formClear();
       this.$emit("refresh");
       this.$message({
         showClose: true,
@@ -267,7 +269,7 @@ export default {
       this.alertVisible = false;
       this.createFormVisible = false;
       this.editFormVisible = false;
-      this.formClear()
+      this.formClear();
       this.$emit("refresh");
       this.$message({
         showClose: true,
@@ -296,7 +298,7 @@ export default {
         model_year: "",
         url: "",
         note: "",
-      }
+      };
     },
   },
 };

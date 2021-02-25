@@ -1,13 +1,10 @@
 <template>
   <div id="footer">
-    <div id="footer-nav">
-      uoray.biz Engineer Team.
-    </div>
+    <div id="footer-nav">uoray.biz Engineer Team.</div>
   </div>
 </template>
 
 <style scoped lang="scss">
-
 #footer-nav {
   padding: 30px;
   text-align: center;
