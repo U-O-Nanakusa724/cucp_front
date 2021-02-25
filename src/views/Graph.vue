@@ -32,7 +32,7 @@ export default {
   data() {
     return {
       cars: [],
-      target: "",
+      target: '',
     };
   },
   created: async function () {
@@ -44,6 +44,7 @@ export default {
       this.$refs.LineChart.filterData(this.target);
     },
     refresh: async function () {
+      this.target = ''
       this.$refs.LineChart.refresh();
     },
   },
@@ -54,7 +55,7 @@ export default {
 .canvas-container {
   position: relative;
   width: calc(100% - 40px);
-  height: calc(100% - 40px);
+  height: calc(100% - 20px);
 
   margin: 20px;
 }

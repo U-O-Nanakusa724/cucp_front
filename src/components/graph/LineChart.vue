@@ -1,11 +1,12 @@
 <script>
-import { Line, mixins} from "vue-chartjs";
+import { Line, mixins } from "vue-chartjs";
 import axios from "axios";
+import "chartjs-plugin-colorschemes";
 
 export default {
   extends: Line,
   mixins: [mixins.reactiveProp],
-  props: ['chartData'],
+  props: ["chartData"],
   name: "chart",
   data() {
     return {
@@ -16,9 +17,14 @@ export default {
       options: {
         cutoutPercentage: 0,
         responsive: true,
-        title: {
+        maintainAspectRatio: false,
+        legend: {
           display: true,
-          text: "価格遷移",
+          position: "right",
+          labels: {
+            fontSize: 10,
+            boxWidth: 3,
+          },
         },
         scales: {
           xAxes: [
@@ -43,6 +49,11 @@ export default {
             },
           ],
         },
+        plugins: {
+          colorschemes: {
+            scheme: "brewer.Paired12",
+          },
+        },
       },
     };
   },
@@ -59,7 +70,9 @@ export default {
     },
     filterData: async function (target) {
       this.data.labels = this.all.labels;
-      this.data.datasets = this.all.datasets.filter(dataset => dataset.label.includes(target));
+      this.data.datasets = this.all.datasets.filter((dataset) =>
+        dataset.label.includes(target)
+      );
       this.renderChart(this.data, this.options);
     },
   },
