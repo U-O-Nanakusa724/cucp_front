@@ -95,9 +95,7 @@ export default {
     },
     deleteCar: async function (row) {
       if (confirm("削除してもよろしいですか?")) {
-        await axios.delete(
-          this.car_apiURL + "/" + row.id + "/delete"
-        );
+        await axios.delete(this.car_apiURL + "/" + row.id + "/delete");
         await this.refresh();
         this.$message({
           showClose: true,
@@ -108,9 +106,7 @@ export default {
     },
     searchCar: async function () {
       var request = "select=" + this.select + "&keyword=" + this.keyword;
-      const res = await axios.get(
-        this.apiURL + "/search?" + request
-      );
+      const res = await axios.get(this.car_apiURL + "/search?" + request);
       this.cars = res.data.cars;
     },
   },
