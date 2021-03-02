@@ -4,6 +4,7 @@
 
 - Vue.js   : フロントプロジェクト作成やライブラリ管理を円滑に行うフレームワーク
 - [Element-UI](https://element.eleme.io/#/en-US) : ボタン、アイコンなどのテンプレートを扱うライブラリ
+- [chartjs-plugin-colorschemes](https://nagix.github.io/chartjs-plugin-colorschemes/) : Chart.jsの色を自動でよしなに反映してくれるライブラリ
 - axios    : APIを叩きやすくするライブラリ
 - sass     : CSSを記述しやすくするライブラリ
 - figma    : フロントデザインツール
@@ -23,7 +24,7 @@ cucp_front
 |  + router
 |  |  + index.js     :SPA(シングルページアプリケーション)対象とするvueを設定する
 |  + store
-|  |  + index.js    :
+|  |  + index.js     :
 |  + views           :SPAの対象となるコンテンツページたちをここに格納する
 |  + App.vue         :共通ヘッダなど、全ページのテンプレートの役割をする。router-viewの箇所にrouter/index.jsで指定したものがSPAされる。
 |  + main.js         :このVueプロジェクト全体でインポートするライブラリを記述するなど、Thymeleafのlayout.htmlみたいな役割を担う
