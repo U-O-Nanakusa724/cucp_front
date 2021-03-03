@@ -1,6 +1,7 @@
 <template>
   <div class="cardetail">
     <CarDetailForm ref="CarDetailForm" @refresh="refresh" />
+    <PriceForm ref="PriceForm" @refresh="refresh" />
 
     <el-row>
       <el-col id="create">
@@ -53,19 +54,50 @@
                     >
                   </p>
                   <el-popover placement="right" width="400" trigger="click">
+                    <div style="text-align: right">
+                    <el-button
+                            size="mini"
+                            type="success"
+                            round
+                            @click="createPrice(props.row.id)">新規追加
+                    </el-button>
+                    </div>
                     <el-table :data="props.row.prices">
                       <el-table-column
-                        width="150"
+                        width="120"
                         property="date"
                         label="確認日"
                         sortable
                       ></el-table-column>
                       <el-table-column
-                        width="200"
+                        width="120"
                         property="price"
                         label="価格(万円)"
                         sortable
                       ></el-table-column>
+                      <el-table-column
+                        prop="operation"
+                        label="編集"
+                        width="200"
+                        align="center"
+                      >
+                        <template slot-scope="scope">
+                          <el-button
+                            size="mini"
+                            type="primary"
+                            icon="el-icon-edit"
+                            round
+                            @click="editPrice(scope.row)"
+                          />
+                          <el-button
+                            size="mini"
+                            type="danger"
+                            icon="el-icon-delete"
+                            round
+                            @click="deletePrice(scope.row)"
+                          />
+                        </template>
+                      </el-table-column>
                     </el-table>
                     <el-button slot="reference">販売レコード一覧</el-button>
                   </el-popover>
@@ -145,10 +177,12 @@
 <script>
 import axios from "axios";
 import CarDetailForm from "../components/forms/CarDetailForm.vue";
+import PriceForm from "../components/forms/PriceForm.vue";
 
 export default {
   components: {
     CarDetailForm,
+    PriceForm,
   },
   data() {
     return {
@@ -188,9 +222,7 @@ export default {
     },
     deleteCarDetail: async function (row) {
       if (confirm("削除してもよろしいですか?")) {
-        await axios.delete(
-          this.detail_apiURL + "/" + row.id + "/delete"
-        );
+        await axios.delete(this.detail_apiURL + "/" + row.id + "/delete");
         await this.refresh();
         this.$message({
           showClose: true,
@@ -198,6 +230,15 @@ export default {
           type: "success",
         });
       }
+    },
+    createPrice: function (detail_id) {
+      this.$refs.PriceForm.createPrice(detail_id);
+    },
+    editPrice: function (price) {
+      this.$refs.PriceForm.editPrice(price);
+    },
+    deletePrice: function (price) {
+      this.$refs.PriceForm.deletePrice(price);
     },
     openURL: async function (url) {
       window.open(url, "_blank");
