@@ -93,7 +93,7 @@ export default {
     },
     editPrice: async function (price) {
       this.editFormVisible = true;
-      this.priceForm = price;
+      this.priceForm = JSON.parse(JSON.stringify(price));
     },
     putPrice: async function (priceForm) {
       await axios.put(this.price_apiURL + "/update", priceForm);
@@ -123,7 +123,6 @@ export default {
       this.createFormVisible = false;
       this.editFormVisible = false;
       this.formClear();
-      this.$emit("refresh");
       this.$message({
         showClose: true,
         message: "キャンセルしました",
