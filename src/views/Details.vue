@@ -40,7 +40,7 @@
             <span>データ取得中...</span>
           </div>
           <div v-else>
-            <el-table :data="list" style="width: 100%">
+            <el-table :data="filtered" style="width: 100%">
               <el-table-column type="expand" fixed>
                 <template slot-scope="props">
                   <p>車種名 : {{ props.row.car.name }}</p>
@@ -190,7 +190,7 @@ export default {
       car_apiURL: process.env.VUE_APP_API_ENDPOINT + "cars",
       cars: [],
       carDetails: [],
-      list: [],
+      filtered: [],
       target: "",
       loading: true,
     };
@@ -205,20 +205,20 @@ export default {
       this.loading = true;
       const res = await axios.get(this.detail_apiURL);
       this.carDetails = res.data.carDetails;
-      this.list = res.data.carDetails;
+      this.filtered = res.data.carDetails;
       this.target = "";
       this.loading = false;
     },
     filterCarDetail: async function () {
-      this.list = this.carDetails.filter(
+      this.filtered = this.carDetails.filter(
         (detail) => detail.car.code == this.target
       );
     },
     createCarDetail: async function () {
       this.$refs.CarDetailForm.createCarDetail();
     },
-    editCarDetail: function (car) {
-      this.$refs.CarDetailForm.editCarDetail(car);
+    editCarDetail: function (detail) {
+      this.$refs.CarDetailForm.editCarDetail(detail);
     },
     deleteCarDetail: async function (row) {
       if (confirm("削除してもよろしいですか?")) {
@@ -231,8 +231,8 @@ export default {
         });
       }
     },
-    createPrice: function (detail_id) {
-      this.$refs.PriceForm.createPrice(detail_id);
+    createPrice: function (detailId) {
+      this.$refs.PriceForm.createPrice(detailId);
     },
     editPrice: function (price) {
       this.$refs.PriceForm.editPrice(price);

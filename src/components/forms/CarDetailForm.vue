@@ -8,7 +8,7 @@
       <el-form :model="carDetailForm">
         <el-form-item label="車種" :label-width="formLabelWidth">
           <el-select
-            v-model="carDetailForm.car.id"
+            v-model="carDetailForm.car_id"
             placeholder="車種、必須項目"
           >
             <el-option
@@ -19,11 +19,11 @@
             >
             </el-option>
           </el-select>
-          <el-button slot="append">車種を追加する</el-button>
         </el-form-item>
+
         <el-form-item label="販売店" :label-width="formLabelWidth">
           <el-select
-            v-model="carDetailForm.store.id"
+            v-model="carDetailForm.store_id"
             placeholder="販売店、必須項目"
           >
             <el-option
@@ -34,7 +34,6 @@
             >
             </el-option>
           </el-select>
-          <el-button slot="append">販売店を追加する</el-button>
         </el-form-item>
 
         <el-form-item label="色" :label-width="formLabelWidth">
@@ -200,7 +199,15 @@ export default {
       cars: [],
       stores: [],
       carDetailForm: {
-        id: "",
+        detail_id: "",
+        car_id: "",
+        store_id: "",
+        color: "",
+        distance: "",
+        mission: "",
+        model_year: "",
+        url: "",
+        note: "",
         car: {
           id: "",
           code: "",
@@ -210,12 +217,6 @@ export default {
           id: "",
           name: "",
         },
-        color: "",
-        distance: "",
-        mission: "",
-        model_year: "",
-        url: "",
-        note: "",
       },
       formLabelWidth: "120px",
       createFormVisible: false,
@@ -235,10 +236,7 @@ export default {
       this.setup();
     },
     postCarDetail: async function (carDetailForm) {
-      await axios.post(
-        this.detail_apiURL + "/create",
-        carDetailForm
-      );
+      await axios.post(this.detail_apiURL + "/create", carDetailForm);
       this.createFormVisible = false;
       this.formClear();
       this.$emit("refresh");
@@ -250,14 +248,13 @@ export default {
     },
     editCarDetail: async function (carDetail) {
       this.editFormVisible = true;
-      this.carDetailForm = carDetail;
+      this.carDetailForm = JSON.parse(JSON.stringify(carDetail));
+      this.carDetailForm.car_id = carDetail.car.id;
+      this.carDetailForm.store_id = carDetail.store.id;
       this.setup();
     },
     putCarDetail: async function (carDetailForm) {
-      await axios.put(
-        this.detail_apiURL + "/update",
-        carDetailForm
-      );
+      await axios.put(this.detail_apiURL + "/update", carDetailForm);
       this.editFormVisible = false;
       this.formClear();
       this.$emit("refresh");
@@ -272,7 +269,6 @@ export default {
       this.createFormVisible = false;
       this.editFormVisible = false;
       this.formClear();
-      this.$emit("refresh");
       this.$message({
         showClose: true,
         message: "キャンセルしました",
@@ -284,7 +280,15 @@ export default {
     },
     formClear: async function () {
       this.carDetailForm = {
-        id: "",
+        detail_id: "",
+        car_id: "",
+        store_id: "",
+        color: "",
+        distance: "",
+        mission: "",
+        model_year: "",
+        url: "",
+        note: "",
         car: {
           id: "",
           code: "",
@@ -294,12 +298,6 @@ export default {
           id: "",
           name: "",
         },
-        color: "",
-        distance: "",
-        mission: "",
-        model_year: "",
-        url: "",
-        note: "",
       };
     },
   },

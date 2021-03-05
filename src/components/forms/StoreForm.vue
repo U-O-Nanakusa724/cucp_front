@@ -82,9 +82,9 @@ export default {
         type: "success",
       });
     },
-    editStore: async function (stores) {
+    editStore: async function (store) {
       this.editFormVisible = true;
-      this.storeForm = stores;
+      this.storeForm = JSON.parse(JSON.stringify(store));
     },
     putStore: async function (storeForm) {
       await axios.put(this.store_apiURL + "/update", storeForm);
@@ -102,7 +102,6 @@ export default {
       this.createFormVisible = false;
       this.editFormVisible = false;
       this.formClear();
-      this.$emit("refresh");
       this.$message({
         showClose: true,
         message: "キャンセルしました",

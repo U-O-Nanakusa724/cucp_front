@@ -91,7 +91,7 @@ export default {
     },
     editCar: async function (car) {
       this.editFormVisible = true;
-      this.carForm = car;
+      this.carForm = JSON.parse(JSON.stringify(car));
     },
     putCar: async function (carForm) {
       await axios.put(this.car_apiURL + "/update", carForm);
@@ -109,7 +109,6 @@ export default {
       this.createFormVisible = false;
       this.editFormVisible = false;
       this.formClear();
-      this.$emit("refresh");
       this.$message({
         showClose: true,
         message: "キャンセルしました",
