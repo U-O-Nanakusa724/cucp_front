@@ -9,7 +9,7 @@
 - sass     : CSSを記述しやすくするライブラリ
 - figma    : フロントデザインツール
 
-<details><summary>ディレクトリと役割(わかるものだけ)</summary><div>
+<details><summary>ディレクトリと役割(理解しているものを随時更新)</summary><div>
 
 ```dir
 cucp_front
