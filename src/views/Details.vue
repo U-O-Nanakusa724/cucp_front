@@ -146,10 +146,18 @@
                 fixed="right"
                 prop="operation"
                 label="編集"
-                width="200"
+                width="300"
                 align="center"
               >
                 <template slot-scope="scope">
+                  <el-button
+                    size="mini"
+                    type="warning"
+                    icon="el-icon-s-flag"
+                    round
+                    @click="setSoldFlag(scope.row)"
+                  >成約
+                  </el-button>
                   <el-button
                     size="mini"
                     type="primary"
@@ -222,11 +230,22 @@ export default {
     },
     deleteCarDetail: async function (row) {
       if (confirm("削除してもよろしいですか?")) {
-        await axios.delete(this.detail_apiURL + "/" + row.id + "/delete");
+        await axios.delete(this.detail_apiURL + "/" + row.detail_id + "/delete");
         await this.refresh();
         this.$message({
           showClose: true,
           message: "レコードを削除しました",
+          type: "success",
+        });
+      }
+    },
+    setSoldFlag: async function (row) {
+      if (confirm("成約済みにしますか?\n成約済みにすると一覧には表示されなくなります")) {
+        await axios.put(this.detail_apiURL + "/" + row.detail_id + "/sold");
+        await this.refresh();
+        this.$message({
+          showClose: true,
+          message: "成約済みにしました",
           type: "success",
         });
       }
