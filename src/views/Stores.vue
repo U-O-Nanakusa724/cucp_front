@@ -42,13 +42,24 @@
                   round
                   @click="editStore(scope.row)"
                 />
-                <el-button
-                  size="mini"
-                  type="danger"
-                  icon="el-icon-delete"
-                  round
-                  @click="deleteStore(scope.row)"
-                />
+                <el-popconfirm
+                  @confirm="deleteStore(scope.row)"
+                  confirm-button-text="削除"
+                  confirm-button-type="danger"
+                  cancel-button-text="取消"
+                  cancel-button-type="primary"
+                  icon="el-icon-info"
+                  icon-color="red"
+                  title="削除してもよろしいですか？"
+                >
+                  <el-button
+                    slot="reference"
+                    size="mini"
+                    type="danger"
+                    icon="el-icon-delete"
+                    round
+                  />
+                </el-popconfirm>
               </template>
             </el-table-column>
           </el-table>
@@ -88,17 +99,13 @@ export default {
       this.$refs.StoreForm.editStore(stores);
     },
     deleteStore: async function (row) {
-      if (confirm("削除してもよろしいですか?")) {
-        await axios.delete(
-          this.store_apiURL + "/" + row.id + "/delete"
-        );
-        await this.refresh();
-        this.$message({
-          showClose: true,
-          message: "レコードを削除しました",
-          type: "success",
-        });
-      }
+      await axios.delete(this.store_apiURL + "/" + row.id + "/delete");
+      await this.refresh();
+      this.$message({
+        showClose: true,
+        message: "レコードを削除しました",
+        type: "success",
+      });
     },
     searchStore: async function () {
       const res = await axios.get(

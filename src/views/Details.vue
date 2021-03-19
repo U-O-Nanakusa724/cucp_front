@@ -55,12 +55,13 @@
                   </p>
                   <el-popover placement="right" width="400" trigger="click">
                     <div style="text-align: right">
-                    <el-button
-                            size="mini"
-                            type="success"
-                            round
-                            @click="createPrice(props.row.id)">新規追加
-                    </el-button>
+                      <el-button
+                        size="mini"
+                        type="success"
+                        round
+                        @click="createPrice(props.row.detail_id)"
+                        >新規追加
+                      </el-button>
                     </div>
                     <el-table :data="props.row.prices">
                       <el-table-column
@@ -89,13 +90,24 @@
                             round
                             @click="editPrice(scope.row)"
                           />
-                          <el-button
-                            size="mini"
-                            type="danger"
-                            icon="el-icon-delete"
-                            round
-                            @click="deletePrice(scope.row)"
-                          />
+                          <el-popconfirm
+                            @confirm="deletePrice(scope.row)"
+                            confirm-button-text="削除"
+                            confirm-button-type="danger"
+                            cancel-button-text="キャンセル"
+                            cancel-button-type="primary"
+                            icon="el-icon-info"
+                            icon-color="red"
+                            title="削除してもよろしいですか？"
+                          >
+                            <el-button
+                              slot="reference"
+                              size="mini"
+                              type="danger"
+                              icon="el-icon-delete"
+                              round
+                            />
+                          </el-popconfirm>
                         </template>
                       </el-table-column>
                     </el-table>
@@ -150,14 +162,25 @@
                 align="center"
               >
                 <template slot-scope="scope">
-                  <el-button
-                    size="mini"
-                    type="warning"
-                    icon="el-icon-s-flag"
-                    round
-                    @click="setSoldFlag(scope.row)"
-                  >成約
-                  </el-button>
+                  <el-popconfirm
+                    @confirm="setSoldFlag(scope.row)"
+                    confirm-button-text="決定"
+                    confirm-button-type="primary"
+                    cancel-button-text="キャンセル"
+                    cancel-button-type="text"
+                    icon="el-icon-question"
+                    icon-color="#f90"
+                    title="成約済みにしますか？(一覧には表示されなくなります)"
+                  >
+                    <el-button
+                      slot="reference"
+                      size="mini"
+                      type="warning"
+                      icon="el-icon-s-flag"
+                      round
+                      >成約
+                    </el-button>
+                  </el-popconfirm>
                   <el-button
                     size="mini"
                     type="primary"
@@ -165,13 +188,24 @@
                     round
                     @click="editCarDetail(scope.row)"
                   />
-                  <el-button
-                    size="mini"
-                    type="danger"
-                    icon="el-icon-delete"
-                    round
-                    @click="deleteCarDetail(scope.row)"
-                  />
+                  <el-popconfirm
+                    @confirm="deleteCarDetail(scope.row)"
+                    confirm-button-text="削除"
+                    confirm-button-type="danger"
+                    cancel-button-text="キャンセル"
+                    cancel-button-type="primary"
+                    icon="el-icon-info"
+                    icon-color="red"
+                    title="削除してもよろしいですか？"
+                  >
+                    <el-button
+                      slot="reference"
+                      size="mini"
+                      type="danger"
+                      icon="el-icon-delete"
+                      round
+                    />
+                  </el-popconfirm>
                 </template>
               </el-table-column>
             </el-table>
@@ -229,26 +263,22 @@ export default {
       this.$refs.CarDetailForm.editCarDetail(detail);
     },
     deleteCarDetail: async function (row) {
-      if (confirm("削除してもよろしいですか?")) {
-        await axios.delete(this.detail_apiURL + "/" + row.detail_id + "/delete");
-        await this.refresh();
-        this.$message({
-          showClose: true,
-          message: "レコードを削除しました",
-          type: "success",
-        });
-      }
+      await axios.delete(this.detail_apiURL + "/" + row.detail_id + "/delete");
+      await this.refresh();
+      this.$message({
+        showClose: true,
+        message: "レコードを削除しました",
+        type: "success",
+      });
     },
     setSoldFlag: async function (row) {
-      if (confirm("成約済みにしますか?\n成約済みにすると一覧には表示されなくなります")) {
-        await axios.put(this.detail_apiURL + "/" + row.detail_id + "/sold");
-        await this.refresh();
-        this.$message({
-          showClose: true,
-          message: "成約済みにしました",
-          type: "success",
-        });
-      }
+      await axios.put(this.detail_apiURL + "/" + row.detail_id + "/sold");
+      await this.refresh();
+      this.$message({
+        showClose: true,
+        message: "成約済みにしました",
+        type: "success",
+      });
     },
     createPrice: function (detailId) {
       this.$refs.PriceForm.createPrice(detailId);

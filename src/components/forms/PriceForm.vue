@@ -107,16 +107,14 @@ export default {
       });
     },
     deletePrice: async function (price) {
-      if (confirm("削除してもよろしいですか?")) {
-        await axios.delete(this.price_apiURL + "/" + price.price_id + "/delete");
-        this.formClear();
-        this.$emit("refresh");
-        this.$message({
-          showClose: true,
-          message: "レコードを削除しました",
-          type: "success",
-        });
-      }
+      await axios.delete(this.price_apiURL + "/" + price.price_id + "/delete");
+      this.formClear();
+      this.$emit("refresh");
+      this.$message({
+        showClose: true,
+        message: "レコードを削除しました",
+        type: "success",
+      });
     },
     cancel: async function () {
       this.alertVisible = false;
