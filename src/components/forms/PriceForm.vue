@@ -7,11 +7,14 @@
     >
       <el-form :model="priceForm">
         <el-form-item label="確認日" :label-width="formLabelWidth">
-          <el-input
-            v-model="priceForm.date"
-            autocomplete="off"
+          <el-date-picker
             placeholder="YYYY/MM/DDで入力"
-          ></el-input>
+            v-model="priceForm.date"
+            format="yyyy/MM/dd"
+            value-format="yyyy/MM/dd"
+            :picker-options="pickerOptions"
+          >
+          </el-date-picker>
         </el-form-item>
         <el-form-item label="価格" :label-width="formLabelWidth">
           <el-input v-model="priceForm.price" autocomplete="off"></el-input>
@@ -30,11 +33,14 @@
     >
       <el-form :model="priceForm">
         <el-form-item label="確認日" :label-width="formLabelWidth">
-          <el-input
-            v-model="priceForm.date"
-            autocomplete="off"
+          <el-date-picker
             placeholder="YYYY/MM/DDで入力"
-          ></el-input>
+            v-model="priceForm.date"
+            format="yyyy/MM/dd"
+            value-format="yyyy/MM/dd"
+            :picker-options="pickerOptions"
+          >
+          </el-date-picker>
         </el-form-item>
         <el-form-item label="価格" :label-width="formLabelWidth">
           <el-input v-model="priceForm.price" autocomplete="off"></el-input>
@@ -62,6 +68,19 @@ import axios from "axios";
 export default {
   data() {
     return {
+      pickerOptions: {
+        disabledDate(time) {
+          return time.getTime() > Date.now();
+        },
+        shortcuts: [
+          {
+            text: "今日",
+            onClick(picker) {
+              picker.$emit("pick", new Date());
+            },
+          },
+        ],
+      },
       price_apiURL: process.env.VUE_APP_API_ENDPOINT + "price",
       priceForm: {
         price_id: "",
