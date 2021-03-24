@@ -48,7 +48,7 @@
           <el-input
             v-model="carDetailForm.distance"
             autocomplete="off"
-            placeholder="小数入力"
+            placeholder="16文字まで(文字可)"
           ></el-input>
         </el-form-item>
 
