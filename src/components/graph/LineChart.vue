@@ -19,6 +19,18 @@ export default {
         cutoutPercentage: 0,
         responsive: true,
         maintainAspectRatio: false,
+        tooltips: {
+          titleFontSize: 18,
+          bodyFontSize: 18,
+          callbacks: {
+            title: function () {
+              return "";
+            },
+            label: function (tooltipItem) {
+              return tooltipItem.value + "万円";
+            },
+          },
+        },
         legend: {
           display: true,
           position: "right",
