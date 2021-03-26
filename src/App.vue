@@ -1,22 +1,27 @@
 <template>
-  <div id="app">
-    <Header/>
-    <router-view/>
-    <Footer/>
-  </div>
+  <el-container id="app">
+    <Aside/>
+    <el-container>
+      <el-header><Header/></el-header>
+      <el-main><router-view/></el-main>
+      <el-footer><Footer/></el-footer>
+    </el-container>
+  </el-container>
 </template>
 
 <script>
-import Header from './components/common/Header'
-import Footer from './components/common/Footer'
+import Aside from "./components/common/Aside";
+import Header from "./components/common/Header";
+import Footer from "./components/common/Footer";
 
 export default {
-  name: 'app',
-  components : {
+  name: "app",
+  components: {
+    Aside,
     Header,
-    Footer
-  }
-}
+    Footer,
+  },
+};
 </script>
 
 <style lang="scss">

@@ -23,9 +23,6 @@
 
       <el-col :span="24" id="data">
         <el-card class="box-card">
-          <div slot="header" class="clearfix">
-            <span>販売店一覧</span>
-          </div>
           <el-table :data="stores" style="width: 100%">
             <el-table-column prop="name" label="販売店名" width="300" />
             <el-table-column
@@ -71,7 +68,7 @@
 
 <script>
 import axios from "axios";
-import StoreForm from "../components/forms/StoreForm.vue";
+import StoreForm from "../../components/forms/StoreForm.vue";
 
 export default {
   components: {

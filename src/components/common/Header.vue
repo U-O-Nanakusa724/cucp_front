@@ -1,19 +1,29 @@
 <template>
   <div id="header">
-    <div id="header-nav">
-      <router-link to="/signin">SignIn</router-link> |
-      <router-link to="/graph">Graph</router-link> |
-      <router-link to="/cars">Cars</router-link> |
-      <router-link to="/stores">Stores</router-link> |
-      <router-link to="/details">Details</router-link>
-    </div>
+    {{ pageTitle }}
   </div>
 </template>
 
+<script>
+import { mapGetters } from 'vuex';
+
+export default {
+  data() {
+    return {}
+  },
+  computed: {
+    ...mapGetters({
+      pageTitle:'pageTitle/pageTitle',
+    }),
+  },
+};
+</script>
+
 <style lang="scss">
-#header-nav {
-  padding: 30px;
+#header {
+  padding: 10px;
   text-align: center;
+  font-size: 25px;
 
   a {
     font-weight: bold;
