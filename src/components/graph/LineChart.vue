@@ -23,8 +23,8 @@ export default {
           titleFontSize: 18,
           bodyFontSize: 18,
           callbacks: {
-            title: function () {
-              return "";
+            title: function (tooltipItem, data) {
+              return data.datasets[tooltipItem[0].datasetIndex].label;
             },
             label: function (tooltipItem) {
               return tooltipItem.value + "万円";
@@ -88,6 +88,9 @@ export default {
       );
       this.renderChart(this.data, this.options);
     },
+    getCarName: async function() {
+      console.log(this.all.datasets)
+    }
   },
   mounted() {
     this.getData();
