@@ -22,7 +22,7 @@ const routes = [
   {
     path: '/cars',
     name: 'cars',
-    component: () => import('../views/cars/Cars.vue'),
+    component: () => import(/* webpackChunkName: "graph" */ '../views/cars/Cars.vue'),
     meta: {
       title: "車種一覧"
     }
@@ -30,7 +30,7 @@ const routes = [
   {
     path: '/carsort',
     name: 'carsort',
-    component: () => import('../views/UnderDevelopment.vue'),
+    component: () => import(/* webpackChunkName: "graph" */ '../views/UnderDevelopment.vue'),
     meta: {
       title: "車種順序変更"
     }
@@ -41,7 +41,7 @@ const routes = [
   {
     path: '/stores',
     name: 'stores',
-    component: () => import('../views/stores/Stores.vue'),
+    component: () => import(/* webpackChunkName: "graph" */ '../views/stores/Stores.vue'),
     meta: {
       title: "販売店一覧"
     }
@@ -49,7 +49,7 @@ const routes = [
   {
     path: '/storesort',
     name: 'storesort',
-    component: () => import('../views/UnderDevelopment.vue'),
+    component: () => import(/* webpackChunkName: "graph" */ '../views/UnderDevelopment.vue'),
     meta: {
       title: "販売店順序変更"
     }
@@ -60,7 +60,7 @@ const routes = [
   {
     path: '/details',
     name: 'details',
-    component: () => import('../views/details/Details.vue'),
+    component: () => import(/* webpackChunkName: "graph" */ '../views/details/Details.vue'),
     meta: {
       title: "車種詳細一覧"
     }
@@ -68,7 +68,7 @@ const routes = [
   {
     path: '/detailsort',
     name: 'detailsort',
-    component: () => import('../views/UnderDevelopment.vue'),
+    component: () => import(/* webpackChunkName: "graph" */ '../views/UnderDevelopment.vue'),
     meta: {
       title: "車種詳細順序変更"
     }
@@ -79,7 +79,7 @@ const routes = [
   {
     path: '/documents',
     name: 'documents',
-    component: () => import('../views/UnderDevelopment.vue'),
+    component: () => import(/* webpackChunkName: "graph" */ '../views/UnderDevelopment.vue'),
     meta: {
       title: "インポート/エクスポート"
     }
@@ -90,7 +90,7 @@ const routes = [
   {
     path: '/develop',
     name: 'develop',
-    component: () => import('../views/UnderDevelopment.vue'),
+    component: () => import(/* webpackChunkName: "graph" */ '../views/UnderDevelopment.vue'),
     meta: {
       title: "開発中"
     }
