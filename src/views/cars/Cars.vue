@@ -27,9 +27,6 @@
 
       <el-col :span="24" id="data">
         <el-card class="box-card">
-          <div slot="header" class="clearfix">
-            <span>車種一覧</span>
-          </div>
           <el-table :data="cars" style="width: 100%">
             <el-table-column fixed prop="code" label="車種コード" width="300" />
             <el-table-column prop="name" label="車種名" width="300" />
@@ -76,7 +73,7 @@
 
 <script>
 import axios from "axios";
-import CarForm from "../components/forms/CarForm.vue";
+import CarForm from "../../components/forms/CarForm.vue";
 
 export default {
   components: {

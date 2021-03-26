@@ -32,10 +32,6 @@
       </el-col>
       <el-col :span="24" id="data">
         <el-card class="box-card">
-          <div slot="header" class="clearfix">
-            <span>車種詳細一覧</span>
-          </div>
-
           <div v-if="loading">
             <span>データ取得中...</span>
           </div>
@@ -218,8 +214,8 @@
 
 <script>
 import axios from "axios";
-import CarDetailForm from "../components/forms/CarDetailForm.vue";
-import PriceForm from "../components/forms/PriceForm.vue";
+import CarDetailForm from "../../components/forms/CarDetailForm.vue";
+import PriceForm from "../../components/forms/PriceForm.vue";
 
 export default {
   components: {
