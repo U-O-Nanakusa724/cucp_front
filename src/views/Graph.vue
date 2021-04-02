@@ -2,10 +2,10 @@
   <div class="canvas-container">
     <el-select v-model="target" placeholder="車種">
       <el-option
-        v-for="item in cars"
+        v-for="item in grades"
         :key="item.id"
-        :label="item.code"
-        :value="item.code"
+        :label="item.grade"
+        :value="item.grade"
       >
       </el-option>
     </el-select>
@@ -31,14 +31,14 @@ export default {
   },
   data() {
     return {
-      car_apiURL: process.env.VUE_APP_API_ENDPOINT + "cars",
-      cars: [],
+      grade_apiURL: process.env.VUE_APP_API_ENDPOINT + "grades",
+      grades: [],
       target: '',
     };
   },
   created: async function () {
-    const car_res = await axios.get(this.car_apiURL);
-    this.cars = car_res.data.cars;
+    const car_res = await axios.get(this.grade_apiURL);
+    this.grades = car_res.data.grades;
   },
   methods: {
     filterCar: async function () {
