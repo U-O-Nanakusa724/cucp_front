@@ -35,6 +35,22 @@ const routes = [
       title: "車種順序変更"
     }
   },
+  {
+    path: '/grades',
+    name: 'grades',
+    component: () => import(/* webpackChunkName: "graph" */ '../views/grades/Grades.vue'),
+    meta: {
+      title: "グレード一覧"
+    }
+  },
+  {
+    path: '/gradesort',
+    name: 'gradesort',
+    component: () => import(/* webpackChunkName: "graph" */ '../views/UnderDevelopment.vue'),
+    meta: {
+      title: "グレード順序変更"
+    }
+  },
   /* ---------------------------------------------------------------------------------------------
     販売店
   --------------------------------------------------------------------------------------------- */

@@ -6,16 +6,17 @@
       :before-close="alert"
     >
       <el-form :model="carDetailForm">
-        <el-form-item label="車種" :label-width="formLabelWidth">
+
+        <el-form-item label="グレード" :label-width="formLabelWidth">
           <el-select
-            v-model="carDetailForm.car_id"
-            placeholder="車種、必須項目"
+            v-model="carDetailForm.grade.id"
+            placeholder="グレード、必須項目"
           >
             <el-option
-              v-for="item in cars"
-              :key="item.id"
-              :label="item.code"
-              :value="item.id"
+              v-for="item in grades"
+              :key="item.grade_id"
+              :label="item.grade"
+              :value="item.grade_id"
             >
             </el-option>
           </el-select>
@@ -23,7 +24,7 @@
 
         <el-form-item label="販売店" :label-width="formLabelWidth">
           <el-select
-            v-model="carDetailForm.store_id"
+            v-model="carDetailForm.store.id"
             placeholder="販売店、必須項目"
           >
             <el-option
@@ -100,7 +101,7 @@
       <el-form :model="carDetailForm">
         <el-form-item label="車種" :label-width="formLabelWidth">
           <el-input
-            v-model="carDetailForm.car.code"
+            v-model="carDetailForm.grade.grade"
             autocomplete="off"
             disabled
           ></el-input>
@@ -118,7 +119,6 @@
             >
             </el-option>
           </el-select>
-          <el-button slot="append">販売店を追加する</el-button>
         </el-form-item>
 
         <el-form-item label="色" :label-width="formLabelWidth">
@@ -194,24 +194,21 @@ export default {
   data() {
     return {
       detail_apiURL: process.env.VUE_APP_API_ENDPOINT + "cardetails",
-      car_apiURL: process.env.VUE_APP_API_ENDPOINT + "cars",
+      grade_apiURL: process.env.VUE_APP_API_ENDPOINT + "grades",
       store_apiURL: process.env.VUE_APP_API_ENDPOINT + "stores",
-      cars: [],
+      grades: [],
       stores: [],
       carDetailForm: {
         detail_id: "",
-        car_id: "",
-        store_id: "",
         color: "",
         distance: "",
         mission: "",
         model_year: "",
         url: "",
         note: "",
-        car: {
+        grade: {
           id: "",
-          code: "",
-          name: "",
+          grade: "",
         },
         store: {
           id: "",
@@ -226,16 +223,19 @@ export default {
   },
   methods: {
     setup: async function () {
-      const cars_res = await axios.get(this.car_apiURL);
-      this.cars = cars_res.data.cars;
+      const grades_res = await axios.get(this.grade_apiURL);
+      this.grades = grades_res.data.grades;
       const stores_res = await axios.get(this.store_apiURL);
       this.stores = stores_res.data.stores;
+      console.log(this.grades)
     },
     createCarDetail: async function () {
       this.createFormVisible = true;
       this.setup();
     },
     postCarDetail: async function (carDetailForm) {
+      carDetailForm.grade_id = carDetailForm.grade.id;
+      carDetailForm.store_id = carDetailForm.store.id;
       await axios.post(this.detail_apiURL + "/create", carDetailForm);
       this.createFormVisible = false;
       this.formClear();
@@ -249,11 +249,11 @@ export default {
     editCarDetail: async function (carDetail) {
       this.editFormVisible = true;
       this.carDetailForm = JSON.parse(JSON.stringify(carDetail));
-      this.carDetailForm.car_id = carDetail.car.id;
-      this.carDetailForm.store_id = carDetail.store.id;
       this.setup();
     },
     putCarDetail: async function (carDetailForm) {
+      carDetailForm.grade_id = carDetailForm.grade.grade_id;
+      carDetailForm.store_id = carDetailForm.store.id;
       await axios.put(this.detail_apiURL + "/update", carDetailForm);
       this.editFormVisible = false;
       this.formClear();
@@ -281,18 +281,15 @@ export default {
     formClear: async function () {
       this.carDetailForm = {
         detail_id: "",
-        car_id: "",
-        store_id: "",
         color: "",
         distance: "",
         mission: "",
         model_year: "",
         url: "",
         note: "",
-        car: {
+        grade: {
           id: "",
-          code: "",
-          name: "",
+          grade: "",
         },
         store: {
           id: "",
