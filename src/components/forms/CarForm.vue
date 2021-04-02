@@ -6,15 +6,11 @@
       :before-close="alert"
     >
       <el-form :model="carForm">
-        <el-form-item label="車種コード" :label-width="formLabelWidth">
-          <el-input
-            v-model="carForm.code"
-            autocomplete="off"
-            placeholder="必須項目"
-          ></el-input>
-        </el-form-item>
         <el-form-item label="車種名" :label-width="formLabelWidth">
-          <el-input v-model="carForm.name" autocomplete="off"></el-input>
+          <el-input v-model="carForm.name" 
+          autocomplete="off" 
+          placeholder="必須項目">
+          </el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -29,15 +25,11 @@
       :before-close="alert"
     >
       <el-form :model="carForm">
-        <el-form-item label="車種コード" :label-width="formLabelWidth">
-          <el-input
-            v-model="carForm.code"
-            autocomplete="off"
-            placeholder="必須項目"
-          ></el-input>
-        </el-form-item>
         <el-form-item label="車種名" :label-width="formLabelWidth">
-          <el-input v-model="carForm.name" autocomplete="off"></el-input>
+          <el-input v-model="carForm.name" 
+          autocomplete="off" 
+          placeholder="必須項目">
+          </el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -65,7 +57,6 @@ export default {
       car_apiURL: process.env.VUE_APP_API_ENDPOINT + "cars",
       carForm: {
         id: "",
-        code: "",
         name: "",
       },
       formLabelWidth: "120px",
@@ -121,7 +112,6 @@ export default {
     formClear: async function () {
       this.carForm = {
         id: "",
-        code: "",
         name: "",
       };
     },

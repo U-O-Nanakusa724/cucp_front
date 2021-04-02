@@ -12,10 +12,6 @@
       <el-col>
         <div style="margin-top: 15px">
           <el-input placeholder="キーワードを入力" v-model="keyword">
-            <el-select v-model="select" slot="prepend" placeholder="検索条件">
-              <el-option label="code" value="code"></el-option>
-              <el-option label="name" value="name"></el-option>
-            </el-select>
             <el-button
               slot="append"
               icon="el-icon-search"
@@ -28,7 +24,6 @@
       <el-col :span="24" id="data">
         <el-card class="box-card">
           <el-table :data="cars" style="width: 100%">
-            <el-table-column fixed prop="code" label="車種コード" width="300" />
             <el-table-column prop="name" label="車種名" width="300" />
             <el-table-column
               prop="operation"
@@ -82,7 +77,6 @@ export default {
   data() {
     return {
       car_apiURL: process.env.VUE_APP_API_ENDPOINT + "cars",
-      select: "",
       keyword: "",
       cars: [],
     };
@@ -111,7 +105,7 @@ export default {
       });
     },
     searchCar: async function () {
-      var request = "select=" + this.select + "&keyword=" + this.keyword;
+      var request = "keyword=" + this.keyword;
       const res = await axios.get(this.car_apiURL + "/search?" + request);
       this.cars = res.data.cars;
     },

@@ -18,8 +18,8 @@
             <el-option
               v-for="item in cars"
               :key="item.id"
-              :label="item.code"
-              :value="item.code"
+              :label="item.name"
+              :value="item.name"
             >
             </el-option>
           </el-select>
@@ -39,7 +39,7 @@
             <el-table :data="filtered" style="width: 100%">
               <el-table-column type="expand" fixed>
                 <template slot-scope="props">
-                  <p>車種名 : {{ props.row.car.name }}</p>
+                  <p>車種名 : {{ props.row.grade.car.name }}</p>
                   <p>備考 : {{ props.row.note }}</p>
                   <p>
                     URL : {{ props.row.url
@@ -113,8 +113,8 @@
               </el-table-column>
               <el-table-column
                 fixed
-                prop="car.code"
-                label="車種コード"
+                prop="grade.grade"
+                label="グレード"
                 sortable
                 width="150"
               />
@@ -249,7 +249,7 @@ export default {
     },
     filterCarDetail: async function () {
       this.filtered = this.carDetails.filter(
-        (detail) => detail.car.code == this.target
+        (detail) => detail.grade.car.name == this.target
       );
     },
     createCarDetail: async function () {
