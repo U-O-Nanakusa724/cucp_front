@@ -23,8 +23,8 @@ cucp_front
 |  |  + common       :全体共通部分を格納する
 |  + router
 |  |  + index.js     :SPA(シングルページアプリケーション)対象とするvueを設定する
-|  + store
-|  |  + index.js     :
+|  + store           :取得したデータを保持したり、特定の処理を行うコードを格納する場所
+|  |  + index.js     :storeに定義した各jsを一括管理するためのファイル
 |  + views           :SPAの対象となるコンテンツページたちをここに格納する
 |  + App.vue         :共通ヘッダなど、全ページのテンプレートの役割をする。router-viewの箇所にrouter/index.jsで指定したものがSPAされる。
 |  + main.js         :このVueプロジェクト全体でインポートするライブラリを記述するなど、Thymeleafのlayout.htmlみたいな役割を担う
