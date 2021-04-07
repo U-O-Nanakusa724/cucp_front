@@ -124,7 +124,14 @@
                 sortable
                 width="200"
               />
-              <el-table-column prop="color" label="色" width="100" />
+              <el-table-column prop="color" label="色" width="100">
+                <template slot-scope="scope">
+                  <ColorIcon 
+                  :id = "scope.row.color.id"
+                  :label= "scope.row.color.label"
+                  :color_code= "scope.row.color.color_code"/>
+                </template>
+              </el-table-column>    
               <el-table-column
                 prop="distance"
                 label="距離"
@@ -216,11 +223,13 @@
 import axios from "axios";
 import CarDetailForm from "../../components/forms/CarDetailForm.vue";
 import PriceForm from "../../components/forms/PriceForm.vue";
+import ColorIcon from "../../components/ColorIcon.vue";
 
 export default {
   components: {
     CarDetailForm,
     PriceForm,
+    ColorIcon
   },
   data() {
     return {
@@ -228,6 +237,7 @@ export default {
       car_apiURL: process.env.VUE_APP_API_ENDPOINT + "cars",
       cars: [],
       carDetails: [],
+
       filtered: [],
       target: "",
       loading: true,

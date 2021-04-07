@@ -6,7 +6,6 @@
       :before-close="alert"
     >
       <el-form :model="carDetailForm">
-
         <el-form-item label="グレード" :label-width="formLabelWidth">
           <el-select
             v-model="carDetailForm.grade.id"
@@ -38,11 +37,15 @@
         </el-form-item>
 
         <el-form-item label="色" :label-width="formLabelWidth">
-          <el-input
-            v-model="carDetailForm.color"
-            autocomplete="off"
-            placeholder="64文字まで"
-          ></el-input>
+          <el-select v-model="carDetailForm.color.id" placeholder="車体カラー">
+            <el-option
+              v-for="item in colors"
+              :key="item.color_id"
+              :label="item.label"
+              :value="item.color_id"
+            >
+            </el-option>
+          </el-select>
         </el-form-item>
 
         <el-form-item label="走行距離" :label-width="formLabelWidth">
@@ -122,11 +125,15 @@
         </el-form-item>
 
         <el-form-item label="色" :label-width="formLabelWidth">
-          <el-input
-            v-model="carDetailForm.color"
-            autocomplete="off"
-            placeholder="64文字まで"
-          ></el-input>
+          <el-select v-model="carDetailForm.color.color_id" placeholder="車体カラー">
+            <el-option
+              v-for="item in colors"
+              :key="item.color_id"
+              :label="item.label"
+              :value="item.color_id"
+            >
+            </el-option>
+          </el-select>
         </el-form-item>
 
         <el-form-item label="走行距離" :label-width="formLabelWidth">
@@ -196,16 +203,12 @@ export default {
       detail_apiURL: process.env.VUE_APP_API_ENDPOINT + "cardetails",
       grade_apiURL: process.env.VUE_APP_API_ENDPOINT + "grades",
       store_apiURL: process.env.VUE_APP_API_ENDPOINT + "stores",
+      color_apiURL: process.env.VUE_APP_API_ENDPOINT + "colors",
       grades: [],
       stores: [],
+      colors: [],
       carDetailForm: {
         detail_id: "",
-        color: "",
-        distance: "",
-        mission: "",
-        model_year: "",
-        url: "",
-        note: "",
         grade: {
           id: "",
           grade: "",
@@ -214,6 +217,15 @@ export default {
           id: "",
           name: "",
         },
+        color: {
+          id: "",
+          label: "",
+        },
+        distance: "",
+        mission: "",
+        model_year: "",
+        url: "",
+        note: "",
       },
       formLabelWidth: "120px",
       createFormVisible: false,
@@ -227,7 +239,8 @@ export default {
       this.grades = grades_res.data.grades;
       const stores_res = await axios.get(this.store_apiURL);
       this.stores = stores_res.data.stores;
-      console.log(this.grades)
+      const colors_res = await axios.get(this.color_apiURL);
+      this.colors = colors_res.data.colors;
     },
     createCarDetail: async function () {
       this.createFormVisible = true;
@@ -236,6 +249,7 @@ export default {
     postCarDetail: async function (carDetailForm) {
       carDetailForm.grade_id = carDetailForm.grade.id;
       carDetailForm.store_id = carDetailForm.store.id;
+      carDetailForm.color_id = carDetailForm.color.id;
       await axios.post(this.detail_apiURL + "/create", carDetailForm);
       this.createFormVisible = false;
       this.formClear();
@@ -254,6 +268,7 @@ export default {
     putCarDetail: async function (carDetailForm) {
       carDetailForm.grade_id = carDetailForm.grade.grade_id;
       carDetailForm.store_id = carDetailForm.store.id;
+      carDetailForm.color_id = carDetailForm.color.color_id;
       await axios.put(this.detail_apiURL + "/update", carDetailForm);
       this.editFormVisible = false;
       this.formClear();
@@ -281,12 +296,6 @@ export default {
     formClear: async function () {
       this.carDetailForm = {
         detail_id: "",
-        color: "",
-        distance: "",
-        mission: "",
-        model_year: "",
-        url: "",
-        note: "",
         grade: {
           id: "",
           grade: "",
@@ -295,6 +304,15 @@ export default {
           id: "",
           name: "",
         },
+        color: {
+          id: "",
+          label: "",
+        },
+        distance: "",
+        mission: "",
+        model_year: "",
+        url: "",
+        note: "",
       };
     },
   },

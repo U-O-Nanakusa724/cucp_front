@@ -48,6 +48,11 @@
                 <i class="el-icon-office-building" />販売店</router-link
               >
             </el-menu-item>
+                        <el-menu-item index="3-4">
+              <router-link to="/colors">
+                <i class="el-icon-brush" />車体カラー</router-link
+              >
+            </el-menu-item>
           </el-menu-item-group>
         </el-submenu>
 
