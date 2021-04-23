@@ -22,7 +22,7 @@ const routes = [
   {
     path: '/cars',
     name: 'cars',
-    component: () => import(/* webpackChunkName: "graph" */ '../views/cars/Cars.vue'),
+    component: () => import(/* webpackChunkName: "car" */ '../views/cars/Cars.vue'),
     meta: {
       title: "車種一覧"
     }
@@ -30,7 +30,7 @@ const routes = [
   {
     path: '/carsort',
     name: 'carsort',
-    component: () => import(/* webpackChunkName: "graph" */ '../views/UnderDevelopment.vue'),
+    component: () => import(/* webpackChunkName: "carsort" */ '../views/UnderDevelopment.vue'),
     meta: {
       title: "車種順序変更"
     }
@@ -38,7 +38,7 @@ const routes = [
   {
     path: '/grades',
     name: 'grades',
-    component: () => import(/* webpackChunkName: "graph" */ '../views/grades/Grades.vue'),
+    component: () => import(/* webpackChunkName: "grade" */ '../views/grades/Grades.vue'),
     meta: {
       title: "グレード一覧"
     }
@@ -46,7 +46,7 @@ const routes = [
   {
     path: '/gradesort',
     name: 'gradesort',
-    component: () => import(/* webpackChunkName: "graph" */ '../views/UnderDevelopment.vue'),
+    component: () => import(/* webpackChunkName: "gradesort" */ '../views/UnderDevelopment.vue'),
     meta: {
       title: "グレード順序変更"
     }
@@ -57,7 +57,7 @@ const routes = [
   {
     path: '/stores',
     name: 'stores',
-    component: () => import(/* webpackChunkName: "graph" */ '../views/stores/Stores.vue'),
+    component: () => import(/* webpackChunkName: "store" */ '../views/stores/Stores.vue'),
     meta: {
       title: "販売店一覧"
     }
@@ -65,18 +65,18 @@ const routes = [
   {
     path: '/storesort',
     name: 'storesort',
-    component: () => import(/* webpackChunkName: "graph" */ '../views/UnderDevelopment.vue'),
+    component: () => import(/* webpackChunkName: "storesort" */ '../views/UnderDevelopment.vue'),
     meta: {
       title: "販売店順序変更"
     }
   },
     /* ---------------------------------------------------------------------------------------------
-    販売店
+    色アイコン
   --------------------------------------------------------------------------------------------- */
   {
     path: '/colors',
     name: 'colors',
-    component: () => import(/* webpackChunkName: "graph" */ '../views/colors/Colors.vue'),
+    component: () => import(/* webpackChunkName: "color" */ '../views/colors/Colors.vue'),
     meta: {
       title: "車体カラー一覧"
     }
@@ -90,7 +90,7 @@ const routes = [
   {
     path: '/details',
     name: 'details',
-    component: () => import(/* webpackChunkName: "graph" */ '../views/details/Details.vue'),
+    component: () => import(/* webpackChunkName: "detail" */ '../views/details/Details.vue'),
     meta: {
       title: "車種詳細一覧"
     }
@@ -98,7 +98,7 @@ const routes = [
   {
     path: '/detailsort',
     name: 'detailsort',
-    component: () => import(/* webpackChunkName: "graph" */ '../views/UnderDevelopment.vue'),
+    component: () => import(/* webpackChunkName: "detailsort" */ '../views/UnderDevelopment.vue'),
     meta: {
       title: "車種詳細順序変更"
     }
@@ -107,11 +107,19 @@ const routes = [
     インポート/エクスポート
   --------------------------------------------------------------------------------------------- */
   {
-    path: '/documents',
-    name: 'documents',
-    component: () => import(/* webpackChunkName: "graph" */ '../views/UnderDevelopment.vue'),
+    path: '/import',
+    name: 'import',
+    component: () => import(/* webpackChunkName: "document" */ '../views/documents/Import.vue'),
     meta: {
-      title: "インポート/エクスポート"
+      title: "インポート"
+    }
+  },
+  {
+    path: '/export',
+    name: 'export',
+    component: () => import(/* webpackChunkName: "document" */ '../views/UnderDevelopment.vue'),
+    meta: {
+      title: "エクスポート"
     }
   },
   /* ---------------------------------------------------------------------------------------------

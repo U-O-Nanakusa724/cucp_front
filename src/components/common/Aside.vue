@@ -31,7 +31,9 @@
 
         <!-- 各マスタデータ関連 -->
         <el-submenu index="3">
-          <template slot="title"> <i class="el-icon-edit-outline" />管理</template>
+          <template slot="title">
+            <i class="el-icon-edit-outline" />管理</template
+          >
           <el-menu-item-group>
             <el-menu-item index="3-1">
               <router-link to="/cars">
@@ -48,7 +50,7 @@
                 <i class="el-icon-office-building" />販売店</router-link
               >
             </el-menu-item>
-                        <el-menu-item index="3-4">
+            <el-menu-item index="3-4">
               <router-link to="/colors">
                 <i class="el-icon-brush" />車体カラー</router-link
               >
@@ -57,13 +59,23 @@
         </el-submenu>
 
         <!-- ファイル関連 -->
-        <el-menu-item index="4">
+        <el-submenu index="4">
           <template slot="title">
-            <router-link to="/documents">
-              <i class="el-icon-folder" />ファイル入出力</router-link
-            >
+            <i class="el-icon-folder" />ファイル入出力
           </template>
-        </el-menu-item>
+          <el-menu-item-group>
+            <el-menu-item index="4-1">
+              <router-link to="/import">
+                <i class="el-icon-upload2" />CSV取り込み</router-link
+              >
+            </el-menu-item>
+            <el-menu-item index="4-2">
+              <router-link to="/export">
+                <i class="el-icon-download" />Excel出力</router-link
+              >
+            </el-menu-item>
+          </el-menu-item-group>
+        </el-submenu>
 
         <!-- ログアウト -->
         <el-menu-item index="5">

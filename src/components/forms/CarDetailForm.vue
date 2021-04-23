@@ -8,7 +8,7 @@
       <el-form :model="carDetailForm">
         <el-form-item label="グレード" :label-width="formLabelWidth">
           <el-select
-            v-model="carDetailForm.grade.id"
+            v-model="carDetailForm.grade.grade_id"
             placeholder="グレード、必須項目"
           >
             <el-option
@@ -23,21 +23,21 @@
 
         <el-form-item label="販売店" :label-width="formLabelWidth">
           <el-select
-            v-model="carDetailForm.store.id"
+            v-model="carDetailForm.store.store_id"
             placeholder="販売店、必須項目"
           >
             <el-option
               v-for="item in stores"
-              :key="item.id"
+              :key="item.store_id"
               :label="item.name"
-              :value="item.id"
+              :value="item.store_id"
             >
             </el-option>
           </el-select>
         </el-form-item>
 
         <el-form-item label="色" :label-width="formLabelWidth">
-          <el-select v-model="carDetailForm.color.id" placeholder="車体カラー">
+          <el-select v-model="carDetailForm.color.color_id" placeholder="車体カラー">
             <el-option
               v-for="item in colors"
               :key="item.color_id"
@@ -111,14 +111,14 @@
         </el-form-item>
         <el-form-item label="販売店" :label-width="formLabelWidth">
           <el-select
-            v-model="carDetailForm.store.id"
+            v-model="carDetailForm.store.store_id"
             placeholder="販売店、必須項目"
           >
             <el-option
               v-for="item in stores"
-              :key="item.id"
+              :key="item.store_id"
               :label="item.name"
-              :value="item.id"
+              :value="item.store_id"
             >
             </el-option>
           </el-select>
@@ -247,9 +247,9 @@ export default {
       this.setup();
     },
     postCarDetail: async function (carDetailForm) {
-      carDetailForm.grade_id = carDetailForm.grade.id;
-      carDetailForm.store_id = carDetailForm.store.id;
-      carDetailForm.color_id = carDetailForm.color.id;
+      carDetailForm.grade_id = carDetailForm.grade.grade_id;
+      carDetailForm.store_id = carDetailForm.store.store_id;
+      carDetailForm.color_id = carDetailForm.color.color_id;
       await axios.post(this.detail_apiURL + "/create", carDetailForm);
       this.createFormVisible = false;
       this.formClear();
@@ -267,7 +267,7 @@ export default {
     },
     putCarDetail: async function (carDetailForm) {
       carDetailForm.grade_id = carDetailForm.grade.grade_id;
-      carDetailForm.store_id = carDetailForm.store.id;
+      carDetailForm.store_id = carDetailForm.store.store_id;
       carDetailForm.color_id = carDetailForm.color.color_id;
       await axios.put(this.detail_apiURL + "/update", carDetailForm);
       this.editFormVisible = false;

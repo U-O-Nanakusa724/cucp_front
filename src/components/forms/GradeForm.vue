@@ -15,12 +15,12 @@
           </el-input>
         </el-form-item>
         <el-form-item label="車種" :label-width="formLabelWidth">
-          <el-select v-model="gradeForm.car.id" placeholder="車種、必須項目">
+          <el-select v-model="gradeForm.car.car_id" placeholder="車種、必須項目">
             <el-option
               v-for="item in cars"
-              :key="item.id"
+              :key="item.car_id"
               :label="item.name"
-              :value="item.id"
+              :value="item.car_id"
             >
             </el-option>
           </el-select>
@@ -47,12 +47,12 @@
           </el-input>
         </el-form-item>
         <el-form-item label="車種" :label-width="formLabelWidth">
-          <el-select v-model="gradeForm.car.id" placeholder="車種、必須項目">
+          <el-select v-model="gradeForm.car.car_id" placeholder="車種、必須項目">
             <el-option
               v-for="item in cars"
-              :key="item.id"
+              :key="item.car_id"
               :label="item.name"
-              :value="item.id"
+              :value="item.car_id"
             >
             </el-option>
           </el-select>
@@ -84,10 +84,9 @@ export default {
       grade_apiURL: process.env.VUE_APP_API_ENDPOINT + "grades",
       gradeForm: {
         grade_id: "",
-        car_id: "",
         grade: "",
         car: {
-          id: "",
+          car_id: "",
           name: "",
         },
       },
@@ -108,7 +107,7 @@ export default {
       this.setup();
     },
     postGrade: async function (gradeForm) {
-      this.gradeForm.car_id = gradeForm.car.id;
+      this.gradeForm.car_id = gradeForm.car.car_id;
       await axios.post(this.grade_apiURL + "/create", gradeForm);
       this.createFormVisible = false;
       this.formClear();
@@ -125,7 +124,7 @@ export default {
       this.setup();
     },
     putGrade: async function (gradeForm) {
-      this.gradeForm.car_id = gradeForm.car.id;
+      this.gradeForm.car_id = gradeForm.car.car_id;
       await axios.put(this.grade_apiURL + "/update", gradeForm);
       this.editFormVisible = false;
       this.formClear();
@@ -152,11 +151,10 @@ export default {
     },
     formClear: async function () {
       this.gradeForm = {
-        id: "",
-        car_id: "",
+        grade_id: "",
         grade: "",
         car: {
-          id: "",
+          car_id: "",
           name: "",
         },
       };
