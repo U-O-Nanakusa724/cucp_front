@@ -96,7 +96,7 @@ export default {
       this.$refs.CarForm.editCar(car);
     },
     deleteCar: async function (row) {
-      await axios.delete(this.car_apiURL + "/" + row.id + "/delete");
+      await axios.delete(this.car_apiURL + "/" + row.car_id + "/delete");
       await this.refresh();
       this.$message({
         showClose: true,

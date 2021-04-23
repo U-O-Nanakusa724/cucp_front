@@ -96,7 +96,7 @@ export default {
       this.$refs.StoreForm.editStore(stores);
     },
     deleteStore: async function (row) {
-      await axios.delete(this.store_apiURL + "/" + row.id + "/delete");
+      await axios.delete(this.store_apiURL + "/" + row.store_id + "/delete");
       await this.refresh();
       this.$message({
         showClose: true,
