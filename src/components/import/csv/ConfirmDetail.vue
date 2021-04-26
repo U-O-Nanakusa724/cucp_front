@@ -84,6 +84,7 @@
 import StatusIcon from "../../StatusIcon";
 import ColorIcon from "../../ColorIcon";
 import EditDetail from "./EditDetail";
+import axios from "axios";
 
 export default {
   components: {
@@ -92,9 +93,30 @@ export default {
     EditDetail,
   },
   props: ["new_details"],
+  data() {
+    return {
+      file_apiURL: process.env.VUE_APP_API_ENDPOINT + "files",
+      request: {
+        car_details: [],
+      },
+    };
+  },
   methods: {
-    saveCarDetail: function () {
-      console.log(this.new_details);
+    saveCarDetail: async function () {
+      for (let element of this.new_details) {
+        element.grade_id = element.grade.grade_id;
+        element.store_id = element.store.store_id;
+        element.color_id = element.color.color_id;
+      }
+      this.request.car_details = this.new_details;
+      console.log(this.request);
+      await axios.post(this.file_apiURL + "/saveCSV", this.request);
+      this.$message({
+        showClose: true,
+        message: "登録完了しました。詳細からご確認ください。",
+        type: "success",
+      });
+      this.$emit("saveData")
     },
     editDetail: function (index, carDetail) {
       this.$refs.EditDetail.editDetail(index, carDetail);
