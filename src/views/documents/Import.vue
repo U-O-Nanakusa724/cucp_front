@@ -23,9 +23,9 @@
         </el-popconfirm>
       </el-col>
 
-      <div v-if="viewUploadButton"><Import @setData="setData" /></div>
+      <div v-if="viewUploadButton"><Upload @setData="setData" /></div>
       <div v-else>
-        <ConfirmDetail v-bind:new_details="data.new_details" />
+        <ConfirmDetail v-bind:new_details="data.new_details" @saveData="destroyData"/>
         <ConfirmCar v-bind:new_cars="data.new_cars" />
         <ConfirmGrade v-bind:new_grades="data.new_grades" />
         <ConfirmStore v-bind:new_stores="data.new_stores" />
@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import Import from "../../components/import/Import.vue";
+import Upload from "../../components/import/Upload.vue";
 import ConfirmCar from "../../components/import/csv/ConfirmCar.vue";
 import ConfirmGrade from "../../components/import/csv/ConfirmGrade.vue";
 import ConfirmStore from "../../components/import/csv/ConfirmStore.vue";
@@ -45,7 +45,7 @@ import ConfirmDetail from "../../components/import/csv/ConfirmDetail.vue";
 
 export default {
   components: {
-    Import,
+    Upload,
     ConfirmCar,
     ConfirmGrade,
     ConfirmStore,
@@ -67,7 +67,6 @@ export default {
   methods: {
     setData: function (data) {
       this.data = data;
-      console.log(data)
       this.viewUploadButton = false;
     },
     destroyData: function () {
