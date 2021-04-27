@@ -3,14 +3,16 @@
     <GradeForm ref="GradeForm" @refresh="refresh" />
 
     <el-row>
-      <el-col id="create">
-        <el-button type="success" round @click="createGrade()"
-          >新規作成</el-button
-        >
-        <el-button type="info" round @click="refresh()"
-          >絞り込みクリア</el-button
-        >
-      </el-col>
+      <div id="subheader">
+        <el-col>
+          <el-button type="success" round @click="createGrade()"
+            >新規作成</el-button
+          >
+          <el-button type="info" round @click="refresh()"
+            >絞り込みクリア</el-button
+          >
+        </el-col>
+      </div>
       <el-col>
         <div style="margin-top: 15px">
           <el-select v-model="target" placeholder="車種">
@@ -154,11 +156,12 @@ export default {
   width: 110px;
 }
 
-#create {
+#subheader {
   text-align: right;
 }
 
 #data {
+  margin-top: 10px;
   text-align: center;
 }
 </style>

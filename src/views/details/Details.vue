@@ -4,7 +4,7 @@
     <PriceForm ref="PriceForm" @refresh="refresh" />
 
     <el-row>
-      <el-col id="create">
+      <el-col id="subheader">
         <el-button type="success" round @click="createCarDetail()"
           >新規作成</el-button
         >
@@ -307,11 +307,12 @@ export default {
   width: 110px;
 }
 
-#create {
+#subheader {
   text-align: right;
 }
 
 #data {
+  margin-top: 10px;
   text-align: center;
 }
 </style>
