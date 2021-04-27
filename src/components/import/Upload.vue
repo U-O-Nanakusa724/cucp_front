@@ -1,7 +1,7 @@
 <template>
   <div id="fileUpload">
     <el-upload
-      class="upload-demo"
+      class="upload"
       action=""
       :on-change="handleAdd"
       :on-remove="handleRemove"
@@ -50,6 +50,7 @@ export default {
         formData,
         config
       );
+      this.fileList = []
       this.$emit('setData', res.data);
     },
     // リストのバッテンを押下した時

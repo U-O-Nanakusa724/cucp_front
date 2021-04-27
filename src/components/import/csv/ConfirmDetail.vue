@@ -109,7 +109,6 @@ export default {
         element.color_id = element.color.color_id;
       }
       this.request.car_details = this.new_details;
-      console.log(this.request);
       await axios.post(this.file_apiURL + "/saveCSV", this.request);
       this.$message({
         showClose: true,
@@ -122,7 +121,6 @@ export default {
       this.$refs.EditDetail.editDetail(index, carDetail);
     },
     finishEditing: function (index, edited) {
-      console.log(edited);
       this.new_details.splice(index, 1, edited);
     },
   },
