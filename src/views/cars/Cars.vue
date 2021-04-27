@@ -3,14 +3,14 @@
     <CarForm ref="CarForm" @refresh="refresh" />
 
     <el-row>
-      <el-col id="create">
-        <el-button type="success" round @click="createCar()"
-          >新規作成</el-button
-        >
-        <el-button type="info" round @click="refresh()">検索クリア</el-button>
-      </el-col>
-      <el-col>
-        <div style="margin-top: 15px">
+      <div id="subheader">
+        <el-col>
+          <el-button type="success" round @click="createCar()"
+            >新規作成</el-button
+          >
+          <el-button type="info" round @click="refresh()">検索クリア</el-button>
+        </el-col>
+        <el-col>
           <el-input placeholder="キーワードを入力" v-model="keyword">
             <el-button
               slot="append"
@@ -18,8 +18,8 @@
               @click="searchCar()"
             ></el-button>
           </el-input>
-        </div>
-      </el-col>
+        </el-col>
+      </div>
 
       <el-col :span="24" id="data">
         <el-card class="box-card">
@@ -118,11 +118,12 @@ export default {
   width: 110px;
 }
 
-#create {
+#subheader {
   text-align: right;
 }
 
 #data {
+  margin-top: 10px;
   text-align: center;
 }
 </style>

@@ -1,23 +1,26 @@
 <template>
-  <div class="canvas-container">
-    <el-select v-model="target" placeholder="車種">
-      <el-option
-        v-for="item in grades"
-        :key="item.id"
-        :label="item.grade"
-        :value="item.grade"
-      >
-      </el-option>
-    </el-select>
-    <el-button
-      slot="append"
-      icon="el-icon-success"
-      @click="filterCar()"
-    ></el-button>
-    <el-button type="info" round @click="refresh()">絞り込みクリア</el-button>
+  <el-row>
+    <el-col id="subheader">
+      <el-select v-model="target" placeholder="グレード">
+        <el-option
+          v-for="item in grades"
+          :key="item.id"
+          :label="item.grade"
+          :value="item.grade"
+        >
+        </el-option>
+      </el-select>
+      <el-button slot="append" icon="el-icon-success" @click="filterCar()">
+      </el-button>
+      <el-button type="info" round @click="refresh()">絞り込みクリア</el-button>
+    </el-col>
 
-    <LineChart ref="LineChart"></LineChart>
-  </div>
+    <el-col id="graph">
+      <div class="canvas-container">
+        <LineChart ref="LineChart"></LineChart>
+      </div>
+    </el-col>
+  </el-row>
 </template>
 
 <script>
@@ -33,7 +36,7 @@ export default {
     return {
       grade_apiURL: process.env.VUE_APP_API_ENDPOINT + "grades",
       grades: [],
-      target: '',
+      target: "",
     };
   },
   created: async function () {
@@ -45,19 +48,24 @@ export default {
       this.$refs.LineChart.filterData(this.target);
     },
     refresh: async function () {
-      this.target = ''
+      this.target = "";
       this.$refs.LineChart.refresh();
     },
   },
 };
 </script>
 
-<style scoped>
-.canvas-container {
-  position: relative;
-  width: calc(100% - 40px);
-  height: calc(100% - 20px);
+<style lang="scss">
+.el-select .el-input {
+  width: 110px;
+}
 
-  margin: 20px;
+#subheader {
+  text-align: right;
+}
+
+#graph {
+  margin-top: 10px;
+  text-align: center;
 }
 </style>

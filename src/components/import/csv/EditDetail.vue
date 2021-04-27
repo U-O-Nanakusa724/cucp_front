@@ -83,11 +83,14 @@
           ></el-input>
         </el-form-item>
         <el-form-item label="最終確認日" :label-width="formLabelWidth">
-          <el-input
+          <el-date-picker
+            placeholder="YYYY/MM/DDで入力"
             v-model="carDetailForm.last_date"
-            autocomplete="off"
-            placeholder="64文字まで"
-          ></el-input>
+            format="yyyy/MM/dd"
+            value-format="yyyy/MM/dd"
+            :picker-options="pickerOptions"
+          >
+          </el-date-picker>
         </el-form-item>
         <el-form-item label="価格" :label-width="formLabelWidth">
           <el-input
@@ -121,6 +124,19 @@ import axios from "axios";
 export default {
   data() {
     return {
+      pickerOptions: {
+        disabledDate(time) {
+          return time.getTime() > Date.now();
+        },
+        shortcuts: [
+          {
+            text: "今日",
+            onClick(picker) {
+              picker.$emit("pick", new Date());
+            },
+          },
+        ],
+      },
       detail_apiURL: process.env.VUE_APP_API_ENDPOINT + "cardetails",
       grade_apiURL: process.env.VUE_APP_API_ENDPOINT + "grades",
       store_apiURL: process.env.VUE_APP_API_ENDPOINT + "stores",
@@ -173,8 +189,8 @@ export default {
       this.carDetailForm = JSON.parse(JSON.stringify(carDetail));
     },
     finishEdit: async function (carDetailForm) {
-      if(carDetailForm.detail_id == null) {
-        carDetailForm.detail_id = 0
+      if (carDetailForm.detail_id == null) {
+        carDetailForm.detail_id = 0;
       }
       carDetailForm.grade = this.grades.find(
         (grade) => grade.grade_id == carDetailForm.grade.grade_id
