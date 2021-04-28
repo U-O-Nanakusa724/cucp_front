@@ -196,7 +196,7 @@ export default {
         (grade) => grade.grade_id == carDetailForm.grade.grade_id
       );
       carDetailForm.store = this.stores.find(
-        (store) => store.id == carDetailForm.store.id
+        (store) => store.store_id == carDetailForm.store.store_id
       );
       carDetailForm.color = this.colors.find(
         (color) => color.color_id == carDetailForm.color.color_id
