@@ -32,8 +32,8 @@ export default {
           },
         },
         legend: {
-          display: true,
-          position: "right",
+          display: false,
+          position: "bottom",
           labels: {
             fontSize: 10,
             boxWidth: 3,
