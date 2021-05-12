@@ -1,42 +1,63 @@
 <template>
   <div class="cardetail">
-    <CarDetailForm ref="CarDetailForm" @refresh="refresh" />
-    <PriceForm ref="PriceForm" @refresh="refresh" />
+    <CarDetailForm ref="CarDetailForm" @refresh="filterCarDetail" />
+    <PriceForm ref="PriceForm" @refresh="filterCarDetail" />
 
     <el-row>
       <el-col id="subheader">
-        <el-button type="success" round @click="createCarDetail()"
-          >新規作成</el-button
-        >
-        <el-button type="info" round @click="refresh()"
-          >絞り込みクリア</el-button
-        >
-      </el-col>
-      <el-col>
         <div style="margin-top: 15px">
-          <el-select v-model="target" placeholder="車種">
+          <el-select v-model="target" placeholder="グレード、選択必須">
             <el-option
-              v-for="item in cars"
-              :key="item.id"
-              :label="item.name"
-              :value="item.name"
+              v-for="item in grades"
+              :key="item.grade_id"
+              :label="item.grade"
+              :value="item.grade_id"
             >
             </el-option>
           </el-select>
+          <el-date-picker
+            style="margin-left: 15px"
+            placeholder="年式(~から)"
+            v-model="start"
+            type="year"
+            format="yyyy"
+            value-format="yyyy"
+          >
+          </el-date-picker>
+          <span> ~ </span>
+          <el-date-picker
+            placeholder="年式(~まで)"
+            v-model="end"
+            type="year"
+            format="yyyy"
+            value-format="yyyy"
+          >
+          </el-date-picker>
+
           <el-button
+            style="margin-left: 15px"
             slot="append"
             icon="el-icon-success"
             @click="filterCarDetail()"
-          ></el-button>
+            >表示</el-button
+          >
+          <el-button type="success" round @click="createCarDetail()"
+            >新規作成</el-button
+          >
+          <el-button type="info" round @click="refresh()">リセット</el-button>
         </div>
       </el-col>
       <el-col :span="24" id="data">
-        <el-card class="box-card">
-          <div v-if="loading">
-            <span>データ取得中...</span>
-          </div>
-          <div v-else>
-            <el-table :data="filtered" style="width: 100%">
+        <div v-if="!execute">
+          <span>グレードを選択してください。</span>
+        </div>
+        <div v-else>
+          <el-card class="box-card">
+            <el-table
+              v-loading="loading"
+              :data="carDetails"
+              style="width: 100%"
+            >
               <el-table-column type="expand" fixed>
                 <template slot-scope="props">
                   <p>車種名 : {{ props.row.grade.car.name }}</p>
@@ -126,12 +147,13 @@
               />
               <el-table-column prop="color" label="色" width="100">
                 <template slot-scope="scope">
-                  <ColorIcon 
-                  :id = "scope.row.color.id"
-                  :label= "scope.row.color.label"
-                  :color_code= "scope.row.color.color_code"/>
+                  <ColorIcon
+                    :id="scope.row.color.id"
+                    :label="scope.row.color.label"
+                    :color_code="scope.row.color.color_code"
+                  />
                 </template>
-              </el-table-column>    
+              </el-table-column>
               <el-table-column
                 prop="distance"
                 label="距離"
@@ -212,8 +234,8 @@
                 </template>
               </el-table-column>
             </el-table>
-          </div>
-        </el-card>
+          </el-card>
+        </div>
       </el-col>
     </el-row>
   </div>
@@ -229,38 +251,55 @@ export default {
   components: {
     CarDetailForm,
     PriceForm,
-    ColorIcon
+    ColorIcon,
   },
   data() {
     return {
       detail_apiURL: process.env.VUE_APP_API_ENDPOINT + "cardetails",
-      car_apiURL: process.env.VUE_APP_API_ENDPOINT + "cars",
-      cars: [],
+      grade_apiURL: process.env.VUE_APP_API_ENDPOINT + "grades",
+      grades: [],
       carDetails: [],
-
-      filtered: [],
-      target: "",
-      loading: true,
+      target: null,
+      loading: false,
+      execute: false,
+      start: "",
+      end: "",
     };
   },
   created: async function () {
-    const car_res = await axios.get(this.car_apiURL);
-    this.cars = car_res.data.cars;
-    await this.refresh();
+    const grade_res = await axios.get(this.grade_apiURL);
+    this.grades = grade_res.data.grades;
+    this.carDetails = [];
+    this.target = null;
   },
   methods: {
     refresh: async function () {
-      this.loading = true;
-      const res = await axios.get(this.detail_apiURL);
-      this.carDetails = res.data.carDetails;
-      this.filtered = res.data.carDetails;
-      this.target = "";
-      this.loading = false;
+      this.carDetails = [];
+      this.target = null;
+      this.execute = false;
+      this.start = "";
+      this.end = "";
     },
     filterCarDetail: async function () {
-      this.filtered = this.carDetails.filter(
-        (detail) => detail.grade.car.name == this.target
-      );
+      this.execute = true;
+      this.loading = true;
+      if(this.start === "") {
+        this.start = "1900";
+      }
+      if(this.end === "") {
+        this.end = "2100";
+      }
+      var url =
+        this.detail_apiURL +
+        "/filter?grade_id=" +
+        this.target +
+        "&start=" +
+        this.start +
+        "&end=" +
+        this.end;
+      const res = await axios.get(url);
+      this.carDetails = res.data.carDetails;
+      this.loading = false;
     },
     createCarDetail: async function () {
       this.$refs.CarDetailForm.createCarDetail();
@@ -304,7 +343,7 @@ export default {
 
 <style lang="scss">
 .el-select .el-input {
-  width: 110px;
+  width: 300px;
 }
 
 #subheader {
